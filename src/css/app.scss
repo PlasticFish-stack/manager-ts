@@ -1,0 +1,15 @@
+// app global css in SCSS form
+.fillet-dark {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: 0.6s ease-out;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+.acrylic-bg {
+  background-color: rgba(235, 235, 235, 0.4);
+  background-image: url(assets/background/acrylic.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
