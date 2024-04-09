@@ -1,17 +1,21 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
-import { useDarkStore } from 'stores/dark-store'
+import { UseDarkStore } from 'stores/dark-store'
 import { UseProgressState } from 'stores/progress-store'
+import { UseLoginState } from 'stores/login-store';
 import { storeToRefs } from 'pinia';
 import { login } from 'src/api/permission'
 import CryptoJS from 'crypto-js'
+import { useRouter } from 'vue-router';
 defineOptions({
   preFetch() {
   }
 });
-const darkStore = useDarkStore();
+const router = useRouter()
+const darkStore = UseDarkStore();
 const { dark } = storeToRefs(darkStore);
 const progressStore = UseProgressState()
+const loginStore = UseLoginState()
 const loginInfomation = reactive({
   username: '',
   password: '',
@@ -26,16 +30,17 @@ async function handleLogin() {
   const { username, password } = loginInfomation
   if (username !== '' && password != '') {
     loadingState.value = true
-    // progressStore.status = true
+    progressStore.status = true
     const loginInfo = Object.assign({}, loginInfomation)
     loginInfo.password = CryptoJS.SHA224(loginInfo.password).toString()
     try {
       const data = await login(loginInfo)
       progressStore.status = false
-      // loginStore.localToken(data.token)
+      loginStore.login()
       console.log(data, 'axios数据返回成功: login');
       setTimeout(() => {
-        router.push('/')
+        console.log(router);
+        router.push({ name: 'index' })
       }, 500)
     } catch (error) {
       loadingState.value = false

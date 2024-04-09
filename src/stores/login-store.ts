@@ -1,15 +1,20 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { LocalStorage } from 'quasar';
 import { useRouter } from 'vue-router';
 
 // import { loginStateReg } from '@/utils/request.js'
 export const UseLoginState = defineStore('login', () => {
   const router = useRouter();
+  const localLoginState = computed(() => {
+    return LocalStorage.getItem('login');
+  });
   const loginState = ref<boolean>(false);
-  if (localStorage.getItem('token') !== null) {
+  if (LocalStorage.getItem('login') !== null) {
     const res = LocalStorage.getItem('login');
     loginState.value = res === 'true';
+  } else {
+    LocalStorage.set('login', false);
   }
   function loginExit() {
     loginState.value = false;
@@ -19,5 +24,5 @@ export const UseLoginState = defineStore('login', () => {
     loginState.value = true;
     LocalStorage.set('login', true);
   }
-  return { loginState, loginExit, login };
+  return { loginState, localLoginState, loginExit, login };
 });
