@@ -42,7 +42,7 @@ async function handleLogin() {
       loginStore.login()
       console.log(data, 'axios数据返回成功: login');
       setTimeout(() => {
-        console.log(router.push('/'));
+        console.log(router.push({ name: 'index' }));
 
       }, 500)
     } catch (error) {

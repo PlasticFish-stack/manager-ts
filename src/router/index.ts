@@ -36,15 +36,12 @@ export default route(function () {
   const whiteList: string[] = ['login'];
   Router.beforeEach((to) => {
     const loginStore = UseLoginStore();
-    if (loginStore.localLoginState === null) {
-      return { name: 'login' };
-    }
     if (typeof to.name === 'string' && !whiteList.includes(to.name)) {
-      if (loginStore.localLoginState === false) {
+      if (loginStore.loginState === false) {
         return { name: 'login' };
       }
     } else {
-      if (loginStore.localLoginState !== false) {
+      if (loginStore.loginState !== false) {
         return { name: 'index' };
       }
     }
