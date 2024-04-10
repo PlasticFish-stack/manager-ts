@@ -1,8 +1,9 @@
 <script setup>
 import { reactive, ref, computed } from 'vue'
 import { UseDarkStore } from 'stores/dark-store'
-import { UseProgressState } from 'stores/progress-store'
-import { UseLoginState } from 'stores/login-store';
+import { UseProgressStore } from 'stores/progress-store'
+import { UseLoginStore } from 'stores/login-store';
+import { UseTitleStore } from 'stores/title-store'
 import { storeToRefs } from 'pinia';
 import { login } from 'src/api/permission'
 import CryptoJS from 'crypto-js'
@@ -14,8 +15,9 @@ defineOptions({
 const router = useRouter()
 const darkStore = UseDarkStore();
 const { dark } = storeToRefs(darkStore);
-const progressStore = UseProgressState()
-const loginStore = UseLoginState()
+const progressStore = UseProgressStore()
+const titleStore = UseTitleStore()
+const loginStore = UseLoginStore()
 const loginInfomation = reactive({
   username: '',
   password: '',
@@ -23,6 +25,7 @@ const loginInfomation = reactive({
 const loadingState = ref(false)
 const errorTip = ref(false)
 const passwordDisplay = ref(true);
+const loginImageDisplay = ref(false);
 const progressFixed = computed(() => {
   return progressStore.progress / 100
 })
@@ -39,14 +42,15 @@ async function handleLogin() {
       loginStore.login()
       console.log(data, 'axios数据返回成功: login');
       setTimeout(() => {
-        console.log(router);
-        router.push({ name: 'index' })
+        console.log(router.push('/'));
+
       }, 500)
     } catch (error) {
       loadingState.value = false
       errorTip.value = true
       setTimeout(() => {
         errorTip.value = false
+        progressStore.progress = 0
       }, 2500)
     }
   }
@@ -56,17 +60,26 @@ async function handleLogin() {
 <template>
   <div class="fullscreen acrylic-bg">
     <div class="login-box fixed-center">
-      <q-img style="width: 45%;" :src="'src/assets/anime/login-light.jpg'" loading="eager" v-show="dark" />
-      <q-img style="width: 45%;" :src="'src/assets/anime/login-dark.jpg'" loading="eager" v-show="!dark" />
+      <div style="width: 45%; overflow: hidden;">
+        <q-responsive :ratio="0.7">
+          <q-skeleton width="45%" square v-if="!loginImageDisplay" />
+          <q-img :src="'src/assets/anime/login-light.jpg'" no-spinner v-if="!dark"
+            @load="() => { loginImageDisplay = true }" loading="eager" />
+          <q-img :src="'src/assets/anime/login-dark.jpg'" no-spinner v-if="dark"
+            @load="() => { loginImageDisplay = true }" loading="eager" />
+        </q-responsive>
+      </div>
+
+
       <div class="relative-position form">
         <q-form class="absolute-center q-pb-xl" style="width: 65%;" @submit="handleLogin">
-          <!-- <div>
-            <div class="q-pb-lg full-width text-center text-h4 text-weight-medium  text-capitalize"
-              style="letter-spacing: 4px;">
-              <q-skeleton square v-if="!titleStore.webTitle" animation="fade" />
-              {{ titleStore.webTitle }}
-            </div>
-          </div> -->
+
+          <div class="q-pb-lg full-width text-center text-h4 text-weight-medium  text-capitalize"
+            style="letter-spacing: 4px;">
+            <q-skeleton square v-if="!titleStore.webTitle" animation="fade" />
+            {{ titleStore.webTitle }}
+          </div>
+
           <q-input v-model="loginInfomation.username" class="q-pb-lg full-width" label="username" lazy-rules
             :rules="[val => !!val || '用户名不能为空']">
             <template v-slot:prepend>
@@ -91,7 +104,7 @@ async function handleLogin() {
           <TransitionGroup name="login" tag="div" style="position: relative;">
             <div class="row absolute items-center full-height full-width" v-if="!errorTip">
               <q-btn :loading="loadingState" outline color="red-13" class="col-12" unelevated size="md" type="submit"
-                style="overflow: hidden;">
+                style="overflow: hidden;" :ripple="false">
                 登录
                 <template v-slot:loading>
                   <q-linear-progress stripe animation-speed="300" rounded style="height: 90%; margin: 0 2px -1px 2px;"
@@ -119,6 +132,7 @@ async function handleLogin() {
 .login-box {
   display: flex;
   overflow: hidden;
+  min-height: 600px;
   min-width: 1050px;
   border-radius: 8px;
   box-shadow: 9px 9px 9px rgba(0, 0, 0, 0.4);

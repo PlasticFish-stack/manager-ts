@@ -5,7 +5,7 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
-import { UseLoginState } from 'stores/login-store';
+import { UseLoginStore } from 'stores/login-store';
 import routes from './routes';
 
 /*
@@ -35,9 +35,7 @@ export default route(function () {
   });
   const whiteList: string[] = ['login'];
   Router.beforeEach((to) => {
-    const loginStore = UseLoginState();
-    console.log(to, 'to');
-    console.log(loginStore.localLoginState);
+    const loginStore = UseLoginStore();
     if (loginStore.localLoginState === null) {
       return { name: 'login' };
     }

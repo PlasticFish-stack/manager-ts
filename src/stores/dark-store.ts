@@ -6,7 +6,7 @@ export const UseDarkStore = defineStore('dark', () => {
   const dark = ref<boolean>(false);
   if (LocalStorage.getItem('dark') !== null) {
     const res = LocalStorage.getItem('dark');
-    dark.value = res === 'true';
+    dark.value = res === true;
   } else {
     LocalStorage.set('dark', false);
   }

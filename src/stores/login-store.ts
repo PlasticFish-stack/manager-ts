@@ -4,7 +4,7 @@ import { LocalStorage } from 'quasar';
 import { useRouter } from 'vue-router';
 
 // import { loginStateReg } from '@/utils/request.js'
-export const UseLoginState = defineStore('login', () => {
+export const UseLoginStore = defineStore('login', () => {
   const router = useRouter();
   const localLoginState = computed(() => {
     return LocalStorage.getItem('login');
