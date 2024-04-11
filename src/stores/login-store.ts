@@ -1,25 +1,27 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { LocalStorage } from 'quasar';
+import { LocalStorage, WebStorageGetMethodReturnType } from 'quasar';
 import { useRouter } from 'vue-router';
 
 // import { loginStateReg } from '@/utils/request.js'
 export const UseLoginStore = defineStore('login', () => {
   const router = useRouter();
-  const loginState = ref<boolean>(false);
-  if (LocalStorage.getItem('login') !== null) {
-    const res = LocalStorage.getItem('login');
-    loginState.value = res === true;
+  const loginState = ref<WebStorageGetMethodReturnType | null>(null);
+  if (LocalStorage.getItem('token') !== null) {
+    const res = LocalStorage.getItem('token');
+    console.log(res);
+
+    loginState.value = res;
   } else {
-    LocalStorage.set('login', false);
+    LocalStorage.set('token', '');
   }
   function loginExit() {
-    loginState.value = false;
+    loginState.value = null;
     router.push('/login');
   }
-  function login() {
+  function login(val: string) {
     loginState.value = true;
-    LocalStorage.set('login', true);
+    LocalStorage.set('token', val);
   }
   return { loginState, loginExit, login };
 });

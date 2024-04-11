@@ -37,7 +37,7 @@ export default route(function () {
   Router.beforeEach((to) => {
     const loginStore = UseLoginStore();
     if (typeof to.name === 'string' && !whiteList.includes(to.name)) {
-      if (loginStore.loginState === false) {
+      if (loginStore.loginState === null) {
         return { name: 'login' };
       }
     } else {
