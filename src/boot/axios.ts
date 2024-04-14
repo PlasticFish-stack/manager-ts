@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
 // import { UseLoginStore } from 'stores/login-store';
 import { UseProgressStore } from 'stores/progress-store';
+import { UseLoginStore } from 'stores/login-store';
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance;
@@ -15,7 +16,10 @@ declare module '@vue/runtime-core' {
 // good idea to move this api creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: '/api' });
+const api = axios.create({
+  baseURL: '/api',
+  validateStatus,
+});
 
 api.interceptors.response.use(function (config) {
   return config.data;
@@ -23,7 +27,11 @@ api.interceptors.response.use(function (config) {
 
 api.interceptors.request.use(
   function (config) {
+    const loginStore = UseLoginStore();
     const progressStore = UseProgressStore();
+    if (loginStore.loginToken) {
+      config.headers.Authorization = `Bearer ${loginStore.loginToken}`;
+    }
     // const loginStore = UseLoginStore();
     progressStore.progress = 0;
     progressStore.timer = null;
@@ -62,23 +70,26 @@ api.interceptors.request.use(
   },
 );
 
-// function validateStatus(status) {
-//   const loginStore = UseLoginState();
-//   switch (status) {
-//     case 400:
-//       break;
-//     case 401:
-//       loginStore.token = null;
-//       return;
-//     case 403:
-//       break;
-//     case 404:
-//       break;
-//     case 500:
-//       break;
-//   }
-//   return status >= 200 && status < 300;
-// }
+function validateStatus(status: number): boolean {
+  const loginStore = UseLoginStore();
+  switch (status) {
+    case 200:
+      loginStore.verify = true;
+      break;
+    case 400:
+      break;
+    case 401:
+      console.log('错');
+      loginStore.verify = false;
+    case 403:
+      break;
+    case 404:
+      break;
+    case 500:
+      break;
+  }
+  return status >= 200 && status < 300;
+}
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 

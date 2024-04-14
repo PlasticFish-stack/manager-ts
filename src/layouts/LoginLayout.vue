@@ -39,11 +39,10 @@ async function handleLogin() {
     try {
       const data = await login(loginInfo)
       progressStore.status = false
-      loginStore.login()
+      loginStore.login(data.token)
       console.log(data, 'axios数据返回成功: login');
       setTimeout(() => {
-        console.log(router.push({ name: 'index' }));
-
+        router.push({ name: 'home' })
       }, 500)
     } catch (error) {
       loadingState.value = false
@@ -60,7 +59,7 @@ async function handleLogin() {
 <template>
   <div class="fullscreen acrylic-bg">
     <div class="login-box fixed-center">
-      <div style="width: 45%; overflow: hidden;">
+      <div style="width: 45%; overflow: hidden;" class="gt-md">
         <q-responsive :ratio="0.7">
           <q-skeleton width="45%" square v-if="!loginImageDisplay" />
           <q-img :src="'src/assets/anime/login-light.jpg'" no-spinner v-if="!dark"
@@ -73,13 +72,11 @@ async function handleLogin() {
 
       <div class="relative-position form">
         <q-form class="absolute-center q-pb-xl" style="width: 65%;" @submit="handleLogin">
-
           <div class="q-pb-lg full-width text-center text-h4 text-weight-medium  text-capitalize"
             style="letter-spacing: 4px;">
             <q-skeleton square v-if="!titleStore.webTitle" animation="fade" />
             {{ titleStore.webTitle }}
           </div>
-
           <q-input v-model="loginInfomation.username" class="q-pb-lg full-width" label="username" lazy-rules
             :rules="[val => !!val || '用户名不能为空']">
             <template v-slot:prepend>
@@ -154,5 +151,28 @@ async function handleLogin() {
   transform: translateX(300px);
   opacity: 0;
 
+}
+</style>
+<style lang="scss">
+body.screen--xs {
+  .login-box {
+    min-height: 100vh;
+    min-width: 100vw;
+  }
+}
+
+body.screen--sm {
+  .login-box {
+    min-height: 100vh;
+    min-width: 100vw;
+  }
+}
+
+body.screen--md {
+  .login-box {
+    min-width: 70%;
+    box-shadow: none;
+    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.4);
+  }
 }
 </style>

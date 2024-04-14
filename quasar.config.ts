@@ -80,13 +80,13 @@ export default configure((/* ctx */) => {
         '/api': {
           target: 'http://www.plastickernel.top',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: path => path.replace(/^\/api/, ''),
         },
         '/ws': {
           target: 'http://www.plastickernel.top',
           changeOrigin: true,
           ws: true,
-          rewrite: (path) => path.replace(/^\/ws/, ''),
+          rewrite: path => path.replace(/^\/ws/, ''),
         },
       },
     },
@@ -106,6 +106,9 @@ export default configure((/* ctx */) => {
           negative: '#9e0012',
           info: '#b1fab6',
           warning: '#fff240',
+        },
+        screen: {
+          bodyClasses: true,
         },
       },
 

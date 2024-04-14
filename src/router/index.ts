@@ -1,10 +1,5 @@
 import { route } from 'quasar/wrappers';
-import {
-  createMemoryHistory,
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
-} from 'vue-router';
+import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { UseLoginStore } from 'stores/login-store';
 import routes from './routes';
 
@@ -18,11 +13,7 @@ import routes from './routes';
  */
 
 export default route(function () {
-  const createHistory = process.env.SERVER
-    ? createMemoryHistory
-    : process.env.VUE_ROUTER_MODE === 'history'
-      ? createWebHistory
-      : createWebHashHistory;
+  const createHistory = process.env.SERVER ? createMemoryHistory : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -34,15 +25,15 @@ export default route(function () {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
   const whiteList: string[] = ['login'];
-  Router.beforeEach((to) => {
+  Router.beforeEach(to => {
     const loginStore = UseLoginStore();
     if (typeof to.name === 'string' && !whiteList.includes(to.name)) {
-      if (loginStore.loginState === null) {
+      if (loginStore.loginToken === null) {
         return { name: 'login' };
       }
     } else {
-      if (loginStore.loginState !== false) {
-        return { name: 'index' };
+      if (loginStore.verify !== false) {
+        return { name: 'home' };
       }
     }
   });
