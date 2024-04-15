@@ -11,6 +11,7 @@ export const UseLoginStore = defineStore('login', () => {
   const resLocalToken: string | undefined = LocalStorage.getItem('token')?.toString();
   if (resLocalToken != undefined && resLocalToken.length != 0) {
     loginToken.value = resLocalToken;
+    verify.value = true;
   } else {
     loginExit();
   }

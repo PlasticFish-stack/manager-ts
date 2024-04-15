@@ -39,17 +39,13 @@ api.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${loginStore.token}`;
     // }
     if (progressStore.status == true) {
-      config.onUploadProgress = (e) => {
+      config.onUploadProgress = e => {
         if (e.total == undefined) return;
         const complete = (e.loaded / e.total) * 100;
         if (complete >= 80) {
           if (progressStore.timer) return;
           progressStore.timer = window.setInterval(() => {
-            if (
-              progressStore.status == false &&
-              progressStore.timer != null &&
-              progressStore.timer != undefined
-            ) {
+            if (progressStore.status == false && progressStore.timer != null && progressStore.timer != undefined) {
               window.clearInterval(progressStore.timer);
               return (progressStore.progress = 100);
             }
@@ -74,7 +70,6 @@ function validateStatus(status: number): boolean {
   const loginStore = UseLoginStore();
   switch (status) {
     case 200:
-      loginStore.verify = true;
       break;
     case 400:
       break;

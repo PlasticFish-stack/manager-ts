@@ -34,6 +34,8 @@ export default route(function () {
     } else {
       if (loginStore.verify !== false) {
         return { name: 'home' };
+      } else {
+        return { name: 'login' };
       }
     }
   });

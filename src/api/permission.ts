@@ -17,6 +17,6 @@ export function check() {
 //   return api.post('/auth/reset_pass', data);
 // }
 // // 获取请求用户名
-// export function loginUser() {
-//   return api.get('/auth/loginUser');
-// }
+export function loginUser() {
+  return api.get('/auth/loginUser');
+}
