@@ -14,10 +14,20 @@
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue';
+import { ref } from 'vue';
 import ServerInfocard from 'components/ServerInfocard.vue';
+import { loginUser } from 'src/api/permission';
+const user = ref<string>('')
+async function verify() {
+  try {
+    const res = await loginUser()
+    user.value = res.data.username
+  } catch {
+    console.log('登录状态异常,请重新登录');
+  }
+}
+verify()
 
-defineOptions({
-  name: 'IndexPage'
-});
+
 </script>
+<style lang="scss"></style>

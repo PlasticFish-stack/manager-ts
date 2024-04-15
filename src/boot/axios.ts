@@ -3,6 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 // import { UseLoginStore } from 'stores/login-store';
 import { UseProgressStore } from 'stores/progress-store';
 import { UseLoginStore } from 'stores/login-store';
+import router from 'src/router';
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance;
@@ -20,7 +21,6 @@ const api = axios.create({
   baseURL: '/api',
   validateStatus,
 });
-
 api.interceptors.response.use(function (config) {
   return config.data;
 });
@@ -68,14 +68,16 @@ api.interceptors.request.use(
 
 function validateStatus(status: number): boolean {
   const loginStore = UseLoginStore();
+
   switch (status) {
     case 200:
       break;
     case 400:
       break;
     case 401:
-      console.log('错');
-      loginStore.verify = false;
+      loginStore.loginToken = null;
+      localStorage.setItem('token', '');
+      router.push('login');
     case 403:
       break;
     case 404:

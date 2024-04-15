@@ -40,6 +40,7 @@ async function handleLogin() {
       const data = await login(loginInfo)
       progressStore.status = false
       loginStore.login(data.token)
+      loginStore.verify = true
       console.log(data, 'axios数据返回成功: login');
       setTimeout(() => {
         router.push({ name: 'home' })

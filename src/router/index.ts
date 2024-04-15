@@ -1,6 +1,5 @@
-import { route } from 'quasar/wrappers';
+// import { route } from 'quasar/wrappers';
 import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
-import { UseLoginStore } from 'stores/login-store';
 import routes from './routes';
 
 /*
@@ -11,33 +10,15 @@ import routes from './routes';
  * async/await or return a Promise which resolves
  * with the Router instance.
  */
+const createHistory = process.env.SERVER ? createMemoryHistory : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory;
 
-export default route(function () {
-  const createHistory = process.env.SERVER ? createMemoryHistory : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory;
+const Router = createRouter({
+  scrollBehavior: () => ({ left: 0, top: 0 }),
+  routes,
 
-  const Router = createRouter({
-    scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
-
-    // Leave this as is and make changes in quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    // quasar.conf.js -> build -> publicPath
-    history: createHistory(process.env.VUE_ROUTER_BASE),
-  });
-  const whiteList: string[] = ['login'];
-  Router.beforeEach(to => {
-    const loginStore = UseLoginStore();
-    if (typeof to.name === 'string' && !whiteList.includes(to.name)) {
-      if (loginStore.loginToken === null) {
-        return { name: 'login' };
-      }
-    } else {
-      if (loginStore.verify !== false) {
-        return { name: 'home' };
-      } else {
-        return { name: 'login' };
-      }
-    }
-  });
-  return Router;
+  // Leave this as is and make changes in quasar.conf.js instead!
+  // quasar.conf.js -> build -> vueRouterMode
+  // quasar.conf.js -> build -> publicPath
+  history: createHistory(process.env.VUE_ROUTER_BASE),
 });
+export default Router;

@@ -7,11 +7,9 @@ import { useRouter } from 'vue-router';
 export const UseLoginStore = defineStore('login', () => {
   const router = useRouter();
   const loginToken = ref<string | null>(null);
-  const verify = ref<boolean>(false);
   const resLocalToken: string | undefined = LocalStorage.getItem('token')?.toString();
   if (resLocalToken != undefined && resLocalToken.length != 0) {
     loginToken.value = resLocalToken;
-    verify.value = true;
   } else {
     loginExit();
   }
@@ -23,5 +21,5 @@ export const UseLoginStore = defineStore('login', () => {
     loginToken.value = val;
     LocalStorage.set('token', val);
   }
-  return { loginToken, loginExit, login, verify };
+  return { loginToken, loginExit, login };
 });
