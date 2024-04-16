@@ -18,9 +18,9 @@
             </q-menu>
           </q-avatar>
           <q-space />
-          <div class="mobile-only text-h5"> {{ titleStore.webTitle }}</div>
+          <!-- <div class="mobile-only text-h5"> {{ titleStore.webTitle }}</div> -->
           <q-space />
-          <q-btn padding="sm" color="red-6" :icon="swipeDrawerOpen ? 'menu_open' : 'menu'" @click="DrawerOpen"
+          <q-btn padding="sm" color="red-7" :icon="swipeDrawerOpen ? 'menu_open' : 'menu'" @click="DrawerOpen"
             class="q-mini-drawer-hide mobile-only" />
         </q-toolbar>
       </div>
@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { loginUser } from 'src/api/permission';
-import { UseTitleStore } from 'src/stores/title-store';
+// import { UseTitleStore } from 'src/stores/title-store';
 import DarkMode from 'components/DarkMode.vue'
 interface SwiperTouch {
   evt?: Event,
@@ -88,7 +88,7 @@ interface SwiperTouch {
   duration?: number,
   distance?: object
 }
-const titleStore = UseTitleStore()
+// const titleStore = UseTitleStore()
 let link = ref('home')
 const user = ref<string>('')
 const leftDrawerOpen = ref(true);

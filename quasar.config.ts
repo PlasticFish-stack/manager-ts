@@ -115,6 +115,7 @@ export default configure((/* ctx */) => {
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
+      lang: 'zh-CN',
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),

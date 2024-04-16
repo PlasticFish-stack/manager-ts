@@ -23,3 +23,20 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
+.acrylic_light {
+  background: radial-gradient(circle at 60% 50%, #f9f7ff 0, #fffbfb 99%, #ebe6e6 100%);
+}
+
+.acrylic_dark {
+  background-color: rgba(124, 124, 124, 0.664);
+  background-image: url(assets/background/dark.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.acrylic_gery {
+  background-color: rgb(30, 30, 30);
+  // background-image: url('/src/assets/utils/dark.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
