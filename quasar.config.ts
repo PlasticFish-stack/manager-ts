@@ -110,6 +110,7 @@ export default configure((/* ctx */) => {
         screen: {
           bodyClasses: true,
         },
+        dark: 'auto',
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -128,7 +129,7 @@ export default configure((/* ctx */) => {
 
     // animations: 'all', // --- includes all animations
     // https://v2.quasar.dev/options/animations
-    animations: [],
+    animations: 'all',
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#sourcefiles
     // sourceFiles: {

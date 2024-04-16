@@ -1,17 +1,20 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { LocalStorage } from 'quasar';
+import { computed } from 'vue';
+import { LocalStorage, useQuasar } from 'quasar';
 
 export const UseDarkStore = defineStore('dark', () => {
-  const dark = ref<boolean>(false);
+  const $q = useQuasar();
+  const dark = computed(() => {
+    return $q.dark.isActive;
+  });
   if (LocalStorage.getItem('dark') !== null) {
     const res = LocalStorage.getItem('dark');
-    dark.value = res === true;
+    $q.dark.set(res === true);
   } else {
-    LocalStorage.set('dark', false);
+    LocalStorage.set('dark', dark.value);
   }
   function darkStateChange(): void {
-    dark.value = true;
+    $q.dark.set(!dark.value);
     LocalStorage.set('dark', dark.value);
   }
   return { dark, darkStateChange };

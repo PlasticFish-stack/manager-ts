@@ -1,4 +1,14 @@
 // app global css in SCSS form
+@charset "utf-8";
+@font-face {
+  font-family: Segoe;
+  src: url(./segoe-ui/SegoeUI-VF.ttf);
+  font-display: block;
+}
+html,
+body {
+  font-family: 'Segoe';
+}
 .fillet-dark {
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.3);
