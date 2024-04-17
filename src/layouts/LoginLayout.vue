@@ -69,8 +69,6 @@ async function handleLogin() {
             @load="() => { loginImageDisplay = true }" loading="eager" />
         </q-responsive>
       </div>
-
-
       <div class="relative-position form">
         <q-form class="absolute-center q-pb-xl" style="width: 65%;" @submit="handleLogin">
           <div class="q-pb-lg full-width text-center text-h4 text-weight-medium  text-capitalize"
@@ -171,9 +169,8 @@ body.screen--sm {
 
 body.screen--md {
   .login-box {
-    min-width: 70%;
-    box-shadow: none;
-    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.4);
+    min-height: 100vh;
+    min-width: 100vw;
   }
 }
 </style>

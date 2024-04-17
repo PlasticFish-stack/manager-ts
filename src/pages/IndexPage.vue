@@ -1,7 +1,10 @@
 <template>
   <q-page class="row q-pt-xs q-pb-md q-px-sm q-pl-xs">
     <div class="column q-pa-md bg-grey-11" style="flex: 1; border-radius: 8px; overflow: hidden;">
-      <CircleProgessCard ratio :info="info.serverMsg['cpu']" title="cpu" />
+      <CircleProgessCard circle ratio :info="info.serverMsg['cpu']" title="cpu" />
+      <CircleProgessCard circle fixed :info="info.serverMsg['memory']" title="memory" />
+      <CircleProgessCard compact :info="[info.userMsg, info.serverMsg]" title="trojan" />
+
       <!-- <div class="row q-mb-md" style=" height: 10rem;">
         <CircleProgessCard />
         <ServerInfocard class="q-mr-md" style="height: 100%;" :info="info.serverMsg['cpu']" title="cpu" />
@@ -31,7 +34,6 @@
 // import { ref } from 'vue';
 // import ServerInfocard from 'components/ServerInfocard.vue';
 import CircleProgessCard from 'components/CircleProgessCard.vue';
-
 import { useInfo } from 'src/composition/serverInfo';
 import { onMounted, onUnmounted } from 'vue'
 const info = useInfo()
