@@ -84,7 +84,7 @@ function byte(data: number): number {
         <q-space></q-space>
       </div>
       <div class="row items-center">
-        <div class="text-subtitle1">{{ name }}</div>
+        <div class="text-subtitle2">{{ name }}</div>
         <q-space></q-space>
         <div class="text-body1"
           v-if="(props.title != 'user' && props.title != 'speed' && props.title != 'netCount' && props.title != 'load')">
