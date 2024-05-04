@@ -22,7 +22,6 @@ watchEffect(() => {
       break;
     case 'memory':
       titleChinese.value = '运行内存'
-
   }
 })
 

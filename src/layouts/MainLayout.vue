@@ -91,6 +91,7 @@ interface SwiperTouch {
 // const titleStore = UseTitleStore()
 let link = ref('home')
 const user = ref<string>('')
+
 const leftDrawerOpen = ref(true);
 const swipeDrawerOpen = ref(false)
 

@@ -1,9 +1,18 @@
 <template>
   <q-page class="row q-pt-xs q-pb-md q-px-sm q-pl-xs">
-    <div class="column q-pa-md bg-grey-11" style="flex: 1; border-radius: 8px; overflow: hidden;">
-      <CircleProgessCard circle ratio :info="info.serverMsg['cpu']" title="cpu" />
-      <CircleProgessCard circle fixed :info="info.serverMsg['memory']" title="memory" />
-      <CircleProgessCard compact :info="[info.userMsg, info.serverMsg]" title="trojan" />
+    <div class="column q-pa-md bg-grey-11" style="width: 1200px; border-radius: 8px; overflow: hidden;">
+      <div class="row">
+        <div class="q-gutter-sm">
+          <CircleProgessCard circle ratio :info="info.serverMsg['cpu']" title="cpu" />
+          <CircleProgessCard circle :info="info.serverMsg['memory']" title="memory" />
+        </div>
+        <div class="q-ml-sm" style="flex: 1; display: flex">
+          <ListCard circle fixed :info="[info.userMsg['userList'], info.userMsg['port']]" title="['成员', '端口']" />
+        </div>
+      </div>
+
+
+      <!-- <CircleProgessCard compact :info="[info.userMsg, info.serverMsg]" title="trojan" /> -->
 
       <!-- <div class="row q-mb-md" style=" height: 10rem;">
         <CircleProgessCard />
@@ -24,15 +33,15 @@
         <ServerInfocard style="flex: 1;" :info="info.serverMsg['speed']" title="speed" />
       </div> -->
     </div>
-    <div class="bg-deep-purple q-ml-md desktop-only col-7 gt-md" style="border-radius: 8px; overflow: hidden;">
-
+    <div class="bg-deep-purple q-ml-md desktop-only " style="flex: 1; border-radius: 8px; overflow: hidden;">
+      123
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 // import { ref } from 'vue';
-// import ServerInfocard from 'components/ServerInfocard.vue';
+import ListCard from 'components/ListCard.vue';
 import CircleProgessCard from 'components/CircleProgessCard.vue';
 import { useInfo } from 'src/composition/serverInfo';
 import { onMounted, onUnmounted } from 'vue'
