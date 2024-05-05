@@ -68,19 +68,7 @@ const progress = computed(() => {
       </q-circular-progress>
     </q-card-section>
   </q-card>
-  <q-card v-if="props.circle === undefined && $props.compact !== undefined"
-    :class="[darkStore.dark ? 'dark' : 'light', props.ratio !== undefined ? 'ratio' : '']" id="card" class="column card"
-    :bordered="false">
-    <q-card-section>
-      <div class="row justify-between items-center text-uppercase col-12" style="font-size: 1.1rem; font-weight: 500;">
-        <span>{{ props.title }}</span>
-        <span v-if="titleChinese !== ''" style="font-size: 0.9rem; font-weight: 600;">{{ titleChinese }}</span>
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <div>123</div>
-    </q-card-section>
-  </q-card>
+
 </template>
 
 <style lang='scss' scoped>

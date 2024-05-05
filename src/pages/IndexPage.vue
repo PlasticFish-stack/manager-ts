@@ -7,7 +7,7 @@
           <CircleProgessCard circle :info="info.serverMsg['memory']" title="memory" />
         </div>
         <div class="q-ml-sm" style="flex: 1; display: flex">
-          <ListCard circle fixed :info="[info.userMsg['userList'], info.userMsg['port']]" title="['成员', '端口']" />
+          <ListCard circle fixed :info="info.userMsg" />
         </div>
       </div>
 
