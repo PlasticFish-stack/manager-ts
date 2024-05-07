@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { quasarDesign } from 'src/utils/color'
-import { computed, watchEffect, ref } from 'vue'
 import { UseDarkStore } from 'src/stores/dark-store';
 import gsap from 'gsap';
 const props = defineProps(['ratio', 'info', 'title', 'fixed', 'circle', 'compact'])
@@ -88,25 +87,9 @@ const progress = computed(() => {
 }
 
 #card {
-
   border-radius: 8px;
   position: relative;
-  box-shadow: inset 0 0px 2px 0px rgb(0 0 0 / 20%),
-    0px 50px 45px -20px rgba(212, 206, 206, 0.4);
   z-index: 1;
-}
-
-
-
-
-.light {
-  background-color: white;
-  color: $blue-grey-8;
-}
-
-.dark {
-  background-color: rgb(48, 48, 48);
-  color: white;
 }
 </style>
 src/utils/color

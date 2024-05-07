@@ -4,7 +4,7 @@
       <div class="row">
         <div class="q-gutter-sm">
           <CircleProgessCard circle ratio :info="info.serverMsg['cpu']" title="cpu" />
-          <CircleProgessCard circle :info="info.serverMsg['memory']" title="memory" />
+          <CircleProgessCard circle :ratio="false" :info="info.serverMsg['memory']" title="memory" />
         </div>
         <div class="q-ml-sm" style="flex: 1; display: flex">
           <ListCard circle fixed :info="info.userMsg" />
@@ -33,7 +33,7 @@
         <ServerInfocard style="flex: 1;" :info="info.serverMsg['speed']" title="speed" />
       </div> -->
     </div>
-    <div class="bg-deep-purple q-ml-md desktop-only " style="flex: 1; border-radius: 8px; overflow: hidden;">
+    <div class="bg-deep-purple q-ml-md desktop-only gt-md " style="flex: 1; border-radius: 8px; overflow: hidden;">
       123
     </div>
   </q-page>

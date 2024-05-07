@@ -81,6 +81,7 @@ function validateStatus(status: number): boolean {
     case 403:
       break;
     case 404:
+      router.push('404');
       break;
     case 500:
       break;

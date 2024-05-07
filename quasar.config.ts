@@ -69,6 +69,19 @@ export default configure((/* ctx */) => {
           },
           { server: false },
         ],
+        [
+          'unplugin-auto-import/vite',
+          {
+            imports: ['vue'],
+          },
+        ],
+        [
+          'unplugin-vue-components/vite',
+          {
+            dirs: ['src/components'],
+            extendsions: ['vue'],
+          },
+        ],
       ],
     },
 
