@@ -45,13 +45,18 @@ import ListCard from 'components/ListCard.vue';
 import CircleProgessCard from 'components/CircleProgessCard.vue';
 import { useInfo } from 'src/composition/serverInfo';
 import { onMounted, onUnmounted } from 'vue'
+import { useScreen } from 'src/composition/screenInfo'
 const info = useInfo()
+const { screen } = useScreen()
+
+
 info.InfoGet()
 
 let systemInformation: number | null | NodeJS.Timeout = null
 onMounted(() => {
   systemInformation = setInterval(() => {
     info.InfoGet()
+    console.log(screen);
   }, 10000)
 })
 onUnmounted(() => {

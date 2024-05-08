@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
 import { UseDarkStore } from 'stores/dark-store'
 import { QTableProps } from 'quasar'
 const props = defineProps(['ratio', 'info', 'title', 'fixed', 'circle'])
@@ -8,13 +7,16 @@ const columns: QTableProps['columns'] = [
   {
     name: 'ID',
     label: 'ID',
-    align: 'left',
+    align: 'center',
     field: 'ID',
     sortable: true
   },
-  { name: 'Username', label: '用户名', field: 'Username', align: 'left' },
-  { name: 'Download', label: '下载', field: 'Download', align: 'left', format: (val: string) => `${(+val / 1024 / 1024 / 1024).toFixed(2)}GB` },
-  { name: 'Upload', label: '上传', field: 'Upload', align: 'left', format: (val: string) => `${(+val / 1024 / 1024 / 1024).toFixed(2)}GB` },
+  { name: 'Username', label: '用户名', field: 'Username', align: 'center' },
+  { name: 'Download', label: '下载', field: 'Download', align: 'center', format: (val: number) => `${(+val / 1024 / 1024 / 1024).toFixed(2)}GB` },
+  { name: 'Upload', label: '上传', field: 'Upload', align: 'center', format: (val: number) => `${(+val / 1024 / 1024 / 1024).toFixed(2)}GB` },
+  { name: 'Quota', label: '限额', field: 'Quota', align: 'center', format: (val: number) => { if (val == -1) { return } else { return `${(+val / 1024 / 1024 / 1024).toFixed(2)}GB` } } },
+  { name: 'UseDays', label: '到期时间', field: 'UseDays', align: 'center' },
+
 ]
 const rows = ref(props.info.userList)
 watchEffect(() => {
