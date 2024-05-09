@@ -59,12 +59,12 @@
       <!-- <q-btn @click="() => { mode }">123</q-btn> -->
       <Transition name="modeMoblie" class="mobile-only">
         <div class="row justify-center full-width" v-show="swipeDrawerOpen">
-          <DarkMode style="transform: scale(0.4);" />
+          <DarkBtn style="transform: scale(0.4);" />
         </div>
       </Transition>
       <Transition name="modeDesktop" class="desktop-only">
         <div class="row justify-center cursor-pointer full-width" v-show="!leftDrawerOpen">
-          <DarkMode style="transform: scale(0.35);" />
+          <DarkBtn style="transform: scale(0.35);" />
         </div>
       </Transition>
 
@@ -79,7 +79,6 @@
 import { ref } from 'vue';
 import { loginUser } from 'src/api/permission';
 // import { UseTitleStore } from 'src/stores/title-store';
-import DarkMode from 'components/DarkMode.vue'
 interface SwiperTouch {
   evt?: Event,
   touch?: boolean,

@@ -7,11 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    CircleProgessCard: typeof import('./src/components/CircleProgessCard.vue')['default']
-    DarkMode: typeof import('./src/components/DarkMode.vue')['default']
-    EssentialLink: typeof import('./src/components/EssentialLink.vue')['default']
-    ExampleComponent: typeof import('./src/components/ExampleComponent.vue')['default']
-    ListCard: typeof import('./src/components/ListCard.vue')['default']
+    DarkBtn: typeof import('./src/components/DarkBtn.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
