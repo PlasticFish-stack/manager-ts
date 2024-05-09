@@ -17,47 +17,34 @@ interface Layout {
   mobile: { [key: string]: object };
   desktop: { [key: string]: object };
 }
-interface Res {
-  [key: string]: {
-    [key: string]: object | string[];
-  };
-}
+
 const props = defineProps(['msg'])
 console.log(props.msg);
 
-const { screen } = useScreen()
+const { layoutFormat } = useScreen()
 const layoutsFormat: Record<string, Layout> = reactive({
   container: {
     mobile: {
       css: {
+        height: '8rem',
         width: '100%'
       },
       class: [
-        'bg-green',
         'row'
       ]
     },
     desktop: {
       css: {
-
+        height: '8rem',
+        width: '100%'
       },
       class: [
-        'bg-red',
+
       ]
     }
   }
 })
-const layouts = computed(() => {
-  const res: Res = {}; // 明确定义res的类型
-  for (let item in layoutsFormat) {
-    if (screen.name === 'xs') {
-      res[item] = layoutsFormat[item].mobile;
-    } else {
-      res[item] = layoutsFormat[item].desktop;
-    }
-  }
-  return res;
-});
+const layouts = layoutFormat(layoutsFormat)
 console.log(layouts.value, 'i');
 
 </script>
@@ -65,5 +52,7 @@ console.log(layouts.value, 'i');
 <style scoped lang="scss">
 .container {
   border-radius: 8px;
+  // background-color: rgb(191, 29, 231);
+  background: linear-gradient(90deg, #5a67e0, #a811da)
 }
 </style>

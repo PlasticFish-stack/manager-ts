@@ -3,7 +3,7 @@
     <div class="column bg-grey-11" style="width: 1200px; border-radius: 8px; overflow: hidden;">
 
       <div class="column q-ma-sm">
-        <ProgressCard class="col-auto" v-for="item, index in serverMsg" :msg="item" :key="index" />
+        <ProgressCard class="col-auto" />
         <!-- <CircleProgessCard circle ratio :info="serverMsg['cpu']" title="cpu" />
         <CircleProgessCard circle :ratio="false" :info="serverMsg['memory']" title="memory" /> -->
       </div>
@@ -29,8 +29,8 @@ const layouts = {
 
 }
 console.log(layouts);
-
-const { serverMsg, InfoGet } = useInfo()
+// serverMsg,
+const { InfoGet } = useInfo()
 const { screen } = useScreen()
 watch(screen, (o, n) => {
   console.log(o, n);
