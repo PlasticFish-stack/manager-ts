@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { UseDarkStore } from 'stores/dark-store';
 const darkStore = UseDarkStore()
-console.log(darkStore.dark);
-
 </script>
 
 <template>

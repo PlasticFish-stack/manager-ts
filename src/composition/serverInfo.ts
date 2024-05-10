@@ -42,7 +42,7 @@ export function useInfo() {
     try {
       const infoResponse = (await serverInfo()) as unknown as resMsg;
       const userResponse = (await userList()) as unknown as resMsg;
-      console.log(infoResponse, userResponse);
+      // console.log(infoResponse, userResponse);
 
       if (infoResponse.Data && userResponse.Data) {
         for (const key in infoResponse.Data) {

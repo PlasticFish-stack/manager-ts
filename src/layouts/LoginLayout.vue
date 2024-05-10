@@ -60,7 +60,7 @@ async function handleLogin() {
 <template>
   <div class="fullscreen acrylic-bg">
     <div class="login-box fixed-center">
-      <div style="width: 45%; overflow: hidden;" class="gt-md">
+      <div style="width: 45%; overflow: hidden;" class="gt-sm">
         <q-responsive :ratio="0.7">
           <q-skeleton width="45%" square v-if="!loginImageDisplay" />
           <q-img :src="'src/assets/anime/login-light.jpg'" no-spinner v-if="!dark"
@@ -168,9 +168,6 @@ body.screen--sm {
 }
 
 body.screen--md {
-  .login-box {
-    min-height: 100vh;
-    min-width: 100vw;
-  }
+  .login-box {}
 }
 </style>
