@@ -10,29 +10,76 @@
         <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">处理器</span>
       </div>
       <div v-if="props.msg.cpu" style="font-size: 1.1rem; font-weight: 600;" :class="(props.msg.cpu)[0] > 80 ? 'text-red-6' :
-    (props.msg.cpu)[0] > 60 ? 'text-deep-orange-6' :
-      (props.msg.cpu)[0] > 25 ? 'text-orange-6' :
-        (props.msg.cpu)[0] > 0 ? 'text-teal-6' : ''
-    ">{{ (props.msg.cpu)[0].toFixed(2) + '%' }}
+        (props.msg.cpu)[0] > 60 ? 'text-deep-orange-6' :
+          (props.msg.cpu)[0] > 25 ? 'text-orange-6' :
+            (props.msg.cpu)[0] > 0 ? 'text-teal-6' : ''
+        ">{{ (props.msg.cpu)[0].toFixed(2) + '%' }}
       </div>
     </div>
-    <div class="disk title q-mt-sm">
+    <div class="disk title q-mt-sm row items-center justify-between">
       <div>
         <div class="title">DISK</div>
         <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">磁盘</span>
       </div>
-      <div>
-        {{ (props.msg.disk) }}
+      <div style="width: 50%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg.disk" class="row items-center">
+        <div style="position: absolute; width: 300px; margin-top: -35px;">
+          已用{{ byte(props.msg.disk['used']) }}MB
+          {{ byte(props.msg.disk['used'] + props.msg.disk['free']) }}MB
+        </div>
+        <div style="flex: 1; height: 100%; display: flex; justify-content: center;">
+          <q-linear-progress reverse stripe rounded size="20px" track-color="grey"
+            :value="byte(props.msg.disk['used']) / byte(props.msg.disk['used'] + props.msg.disk['free'])" color="red" />
+        </div>
+
       </div>
     </div>
-    <div class="memory title">
-      memory {{ props.msg.memory }}
+    <div class="memory title row items-center justify-between">
+      <div>
+        <div class="title">MEMORY</div>
+        <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">运行内存</span>
+      </div>
+      <div style="width: 50%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg.disk" class="row items-center">
+        <div style="position: absolute; width: 300px; margin-top: -35px;">
+          已用{{ byte(props.msg.memory['used']) }}MB/{{ byte(props.msg.memory['total']) }}MB
+        </div>
+        <div style="flex: 1; height: 100%; display: flex; justify-content: center;">
+          <q-linear-progress reverse stripe rounded size="20px" track-color="grey"
+            :value="byte(props.msg.memory['used']) / byte(props.msg.memory['total'])" color="red" />
+        </div>
+
+      </div>
     </div>
-    <div class="load title">
-      load {{ props.msg.load }}
+    <div class="load title row items-center justify-between">
+      <div>
+        <div class="title">LOAD</div>
+        <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">负载</span>
+      </div>
+      <div style="width: 50%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg.disk" class="row items-center">
+        <div style="position: absolute; width: 300px; margin-top: -35px;">
+          已用{{ byte(props.msg.memory['used']) }}MB/{{ byte(props.msg.memory['total']) }}MB
+        </div>
+        <div style="flex: 1; height: 100%; display: flex; justify-content: center;">
+          <q-linear-progress reverse stripe rounded size="20px" track-color="grey"
+            :value="byte(props.msg.memory['used']) / byte(props.msg.memory['total'])" color="red" />
+        </div>
+
+      </div>
     </div>
-    <div class="swap title">
-      swap {{ props.msg.swap }}
+    <div class="memory title row items-center justify-between">
+      <div>
+        <div class="title">MEMORY</div>
+        <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">运行内存</span>
+      </div>
+      <div style="width: 50%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg.disk" class="row items-center">
+        <div style="position: absolute; width: 300px; margin-top: -35px;">
+          已用{{ byte(props.msg.memory['used']) }}MB/{{ byte(props.msg.memory['total']) }}MB
+        </div>
+        <div style="flex: 1; height: 100%; display: flex; justify-content: center;">
+          <q-linear-progress reverse stripe rounded size="20px" track-color="grey"
+            :value="byte(props.msg.memory['used']) / byte(props.msg.memory['total'])" color="red" />
+        </div>
+
+      </div>
     </div>
   </div>
 </template>
@@ -98,6 +145,9 @@ const layoutsFormat: Record<string, Layout> = reactive({
   },
 })
 const layouts = layoutFormat(layoutsFormat)
+function byte(data: number) {
+  return +(data / 1024 / 1024).toFixed(2)
+}
 </script>
 
 <style scoped lang="scss">

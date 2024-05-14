@@ -5,7 +5,6 @@
       <div class="column q-ma-sm">
         <div class="row q-gutter-x-md">
           <ServerCard :msg="serverMsg" style="flex: 1;" />
-          <ServerCard :msg="serverMsg" style="flex: 1;" />
         </div>
         <div class="row">
 
