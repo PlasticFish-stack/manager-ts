@@ -10,10 +10,10 @@
         <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">处理器</span>
       </div>
       <div v-if="props.msg.cpu" style="font-size: 1.1rem; font-weight: 600;" :class="(props.msg.cpu)[0] > 80 ? 'text-red-6' :
-        (props.msg.cpu)[0] > 60 ? 'text-deep-orange-6' :
-          (props.msg.cpu)[0] > 25 ? 'text-orange-6' :
-            (props.msg.cpu)[0] > 0 ? 'text-teal-6' : ''
-        ">{{ (props.msg.cpu)[0].toFixed(2) + '%' }}
+    (props.msg.cpu)[0] > 60 ? 'text-deep-orange-6' :
+      (props.msg.cpu)[0] > 25 ? 'text-orange-6' :
+        (props.msg.cpu)[0] > 0 ? 'text-teal-6' : ''
+    ">{{ (props.msg.cpu)[0].toFixed(2) + '%' }}
       </div>
     </div>
     <div class="disk title q-mt-sm row items-center justify-between">
@@ -23,8 +23,7 @@
       </div>
       <div style="width: 50%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg.disk" class="row items-center">
         <div style="position: absolute; width: 300px; margin-top: -35px;">
-          已用{{ byte(props.msg.disk['used']) }}MB
-          {{ byte(props.msg.disk['used'] + props.msg.disk['free']) }}MB
+          已用{{ byte(props.msg.disk['used']) }}MB/{{ byte(props.msg.disk['used'] + props.msg.disk['free']) }}MB
         </div>
         <div style="flex: 1; height: 100%; display: flex; justify-content: center;">
           <q-linear-progress reverse stripe rounded size="20px" track-color="grey"
@@ -41,6 +40,13 @@
       <div style="width: 50%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg.disk" class="row items-center">
         <div style="position: absolute; width: 300px; margin-top: -35px;">
           已用{{ byte(props.msg.memory['used']) }}MB/{{ byte(props.msg.memory['total']) }}MB
+        </div>
+        <div :class="(+(props.msg.memory['used'] / props.msg.memory['total'] * 100).toFixed(2)) > 80 ? 'text-red-6' :
+    (+(props.msg.memory['used'] / props.msg.memory['total'] * 100).toFixed(2)) > 60 ? 'text-deep-orange-6' :
+      (+(props.msg.memory['used'] / props.msg.memory['total'] * 100).toFixed(2)) > 25 ? 'text-orange-6' :
+        (+(props.msg.memory['used'] / props.msg.memory['total'] * 100).toFixed(2)) > 0 ? 'text-teal-6' : ''
+    " style="position: absolute; width: 50px; margin-left: -55px; display: flex; justify-content: flex-end">
+          {{ (props.msg.memory['used'] / props.msg.memory['total'] * 100).toFixed(2) }}%
         </div>
         <div style="flex: 1; height: 100%; display: flex; justify-content: center;">
           <q-linear-progress reverse stripe rounded size="20px" track-color="grey"

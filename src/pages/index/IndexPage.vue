@@ -1,46 +1,50 @@
 <template>
-  <q-page class="row q-pt-xs q-pb-md q-px-sm q-pl-xs">
-    <div class="column bg-grey-11" style="width: 1200px; border-radius: 8px; overflow: hidden;">
-
-      <div class="column q-ma-sm">
+  <q-page class="row q-pt-xs q-pb-md q-px-sm q-pl-xs" style="overflow: hidden;">
+    <div class="column" style="width: 800px; border-radius: 8px; overflow: hidden;">
+      <div class="column" :class="layouts.container.class" :style="(layouts.container.css as StyleValue)">
         <div class="row q-gutter-x-md">
           <ServerCard :msg="serverMsg" style="flex: 1;" />
         </div>
-        <div class="row">
-
-        </div>
-        <!-- <CircleProgessCard circle ratio :info="serverMsg['cpu']" title="cpu" />
-        <CircleProgessCard circle :ratio="false" :info="serverMsg['memory']" title="memory" /> -->
       </div>
-      <!-- <div class="" style="flex: 1; display: flex">
-        <ListCard circle fixed :info="info.userMsg" />
-      </div> -->
     </div>
-    <!-- <div class="bg-deep-purple desktop-only gt-md " style="flex: 1; border-radius: 8px; overflow: hidden;">
-      123
-    </div> -->
   </q-page>
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue';
-// import ListCard from './components/ListCard.vue';
-// import CircleProgessCard from './components/CircleProgessCard.vue';
 import ServerCard from './components/ServerCard'
 import { useInfo } from 'src/composition/serverInfo';
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, StyleValue } from 'vue'
 import { useScreen } from 'src/composition/screenInfo'
-const layouts = {
-
+interface Layout {
+  mobile: { [key: string]: object };
+  desktop: { [key: string]: object };
 }
-console.log(layouts);
+
+const { layoutFormat } = useScreen()
+const layoutsFormat: Record<string, Layout> = reactive({
+  container: {
+    mobile: {
+      css: {
+        flex: '1',
+        height: '100%'
+      },
+      class: [
+
+      ]
+    },
+    desktop: {
+      css: {
+
+      },
+      class: [
+        'q-ma-xs'
+      ]
+    }
+  },
+})
+const layouts = layoutFormat(layoutsFormat)
 // serverMsg,
 const { InfoGet, serverMsg } = useInfo()
-const { screen } = useScreen()
-watch(screen, (o, n) => {
-  console.log(o, n);
-
-})
 InfoGet()
 let systemInformation: number | null | NodeJS.Timeout = null
 onMounted(() => {
@@ -56,4 +60,3 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss"></style>
-./components/SeverCard./components/ServerCard

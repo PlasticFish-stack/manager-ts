@@ -100,7 +100,7 @@ async function handleLogin() {
           <TransitionGroup name="login" tag="div" style="position: relative;">
             <div class="row absolute items-center full-height full-width" v-if="!errorTip">
               <q-btn :loading="loadingState" outline color="red-13" class="col-12" unelevated size="md" type="submit"
-                style="overflow: hidden;" :ripple="false">
+                style="overflow: hidden;" :ripple="true">
                 登录
                 <template v-slot:loading>
                   <q-linear-progress stripe animation-speed="300" rounded style="height: 90%; margin: 0 2px -1px 2px;"

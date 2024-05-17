@@ -1,5 +1,6 @@
 // app global css in SCSS form
 @charset "utf-8";
+@import './text.scss';
 @font-face {
   font-family: Segoe;
   src: url(./segoe-ui/SegoeUI-VF.ttf);
