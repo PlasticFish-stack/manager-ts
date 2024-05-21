@@ -16,6 +16,9 @@ export const UseDarkStore = defineStore('dark', () => {
   function darkStateChange(): void {
     $q.dark.set(!dark.value);
     LocalStorage.set('dark', dark.value);
+    (async () => {
+      await nextTick();
+    })();
   }
   return { dark, darkStateChange };
 });

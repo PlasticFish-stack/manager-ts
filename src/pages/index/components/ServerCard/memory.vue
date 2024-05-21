@@ -3,11 +3,13 @@
     <div class="title">MEMORY</div>
     <span style="font-size: 0.9rem; font-weight: 600;" class="text-grey-8">运行内存</span>
   </div>
-  <div style="width: 60%; font-size: 0.7rem; font-weight: 500;" v-if="props.msg" class="row items-center">
-    <div style="position: absolute; width: 400px; margin-top: -35px; display: flex;">
+  <div style="position: relative; width: 60%; align-items: center; font-size: 0.7rem; font-weight: 500;"
+    v-if="props.msg" class="row">
+    <div
+      style="position: absolute; width: 100%; margin-top: -45px; display: flex; align-items: center; justify-content: space-between;">
       已用{{ byte(props.msg['used']) }}MB/{{ byte(props.msg['total']) }}MB
-      <div :class="level(+(props.msg['used'] / props.msg['total'] * 100).toFixed(2))"
-        style="width: 50px; display: flex; margin-left: 2px;">
+      <div class="ratio" :class="level(+(props.msg['used'] / props.msg['total'] * 100).toFixed(2))"
+        style="width: 50px; margin-left: 2px;">
         {{ (props.msg['used'] / props.msg['total'] * 100).toFixed(2) }}%
       </div>
     </div>
