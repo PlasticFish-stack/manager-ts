@@ -14,14 +14,13 @@
       <memory v-if="props.msg.memory" :msg="props.msg.memory" />
     </div>
     <button @click="console.log(darkStore.dark)"></button>
-    {{ i }}
   </div>
 </template>
 
 <script setup lang="ts">
-import cpu from './cpu.vue'
-import disk from './disk.vue'
-import memory from './memory.vue'
+import cpu from './components/cpu.vue'
+import disk from './components/disk.vue'
+import memory from './components/memory.vue'
 
 import { useScreen } from 'src/composition/screenInfo';
 import { StyleValue } from 'vue';
@@ -83,22 +82,12 @@ const layoutsFormat = () => {
           'text-grey-9'
         ]
       }
-    },
+    }
   }
 }
-let i = ref(1)
-let layouts = layoutFormat(layoutsFormat())
-watch(() => darkStore.dark, (n) => {
-  console.log(i.value++);
-  layouts = layoutFormat(layoutsFormat())
-  console.log(layoutsFormat().container.desktop.class);
+console.log(layoutsFormat, 'wtf');
 
-  console.log(layouts.value);
-
-})
-onMounted(() => {
-
-})
+let layouts = layoutFormat(layoutsFormat, true)
 
 
 </script>

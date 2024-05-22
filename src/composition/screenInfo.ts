@@ -11,10 +11,10 @@ interface Res {
     [key: string]: object | string[];
   };
 }
-interface Layout {
-  mobile: { [key: string]: object };
-  desktop: { [key: string]: object };
-}
+// interface Layout {
+//   mobile: { [key: string]: object };
+//   desktop: { [key: string]: object };
+// }
 export const useScreen = () => {
   const $q = useQuasar();
   const screen = reactive<Screen>({
@@ -22,6 +22,8 @@ export const useScreen = () => {
     width: 0,
     name: '',
   });
+  const funcStack: ((() => object) | undefined)[] = [];
+  let response = reactive({});
   function getScreenType(screens: QVueGlobals['screen']) {
     for (const item in screen) {
       const res = screens[item as keyof QVueGlobals['screen']];
@@ -31,7 +33,16 @@ export const useScreen = () => {
       screen[item] = res;
     }
   }
-  function layoutFormat(layout: Record<string, Layout>) {
+  function layoutFormat(func: () => object, bool?: boolean) {
+    if (bool) {
+      funcStack.push(func);
+    } else {
+      response = Object.assign(response, func());
+    }
+
+    console.log(response, funcStack, 'response');
+
+    const layout = func();
     const layouts = computed(() => {
       const res: Res = {}; // 明确定义res的类型
       for (const item in layout) {

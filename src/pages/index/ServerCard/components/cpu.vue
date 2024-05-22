@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import { level } from './utils';
+import { level } from '../utils';
 const props = defineProps(['msg'])
 </script>
 
 <style scoped lang="scss">
-@import './app.scss'
+@import '../app.scss'
 </style>

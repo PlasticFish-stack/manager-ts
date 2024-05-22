@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
+// import { useScreen } from 'src/composition/screenInfo';
 import { LocalStorage, useQuasar } from 'quasar';
 
 export const UseDarkStore = defineStore('dark', () => {
   const $q = useQuasar();
+  // const screen = useScreen();
   const dark = computed(() => {
     return $q.dark.isActive;
   });
@@ -13,12 +15,9 @@ export const UseDarkStore = defineStore('dark', () => {
   } else {
     LocalStorage.set('dark', dark.value);
   }
-  function darkStateChange(): void {
+  async function darkStateChange() {
     $q.dark.set(!dark.value);
     LocalStorage.set('dark', dark.value);
-    (async () => {
-      await nextTick();
-    })();
   }
   return { dark, darkStateChange };
 });

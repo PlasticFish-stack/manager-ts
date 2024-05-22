@@ -21,11 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import { level, byte, randomColor } from './utils';
+import { level, byte, randomColor } from '../utils';
 const color = randomColor()
 const props = defineProps(['msg'])
 </script>
 
 <style scoped lang="scss">
-@import './app.scss'
+@import '../app.scss'
 </style>

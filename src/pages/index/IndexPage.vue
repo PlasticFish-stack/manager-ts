@@ -11,37 +11,39 @@
 </template>
 
 <script setup lang="ts">
-import ServerCard from './components/ServerCard'
+import ServerCard from './ServerCard'
 import { useInfo } from 'src/composition/serverInfo';
 import { onMounted, onUnmounted, StyleValue } from 'vue'
 import { useScreen } from 'src/composition/screenInfo'
-interface Layout {
-  mobile: { [key: string]: object };
-  desktop: { [key: string]: object };
-}
+// interface Layout {
+//   mobile: { [key: string]: object };
+//   desktop: { [key: string]: object };
+// }
 
 const { layoutFormat } = useScreen()
-const layoutsFormat: Record<string, Layout> = reactive({
-  container: {
-    mobile: {
-      css: {
-        flex: '1',
-        height: '100%'
-      },
-      class: [
+const layoutsFormat = () => {
+  return {
+    container: {
+      mobile: {
+        css: {
+          flex: '1',
+          height: '100%'
+        },
+        class: [
 
-      ]
-    },
-    desktop: {
-      css: {
-
+        ]
       },
-      class: [
-        'q-ma-xs'
-      ]
+      desktop: {
+        css: {
+
+        },
+        class: [
+          'q-ma-xs'
+        ]
+      }
     }
-  },
-})
+  }
+}
 const layouts = layoutFormat(layoutsFormat)
 // serverMsg,
 const { InfoGet, serverMsg } = useInfo()
