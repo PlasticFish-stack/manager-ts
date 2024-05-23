@@ -23,7 +23,7 @@ export const useScreen = () => {
     name: '',
   });
   const funcStack: ((() => object) | undefined)[] = [];
-  let response = reactive({});
+  const response = ref({});
   function getScreenType(screens: QVueGlobals['screen']) {
     for (const item in screen) {
       const res = screens[item as keyof QVueGlobals['screen']];
@@ -37,10 +37,24 @@ export const useScreen = () => {
     if (bool) {
       funcStack.push(func);
     } else {
-      response = Object.assign(response, func());
-    }
+      const res: object = func();
+      // console.log(Object.keys(response), Object.keys(res), 'res');
+      // response = Object.assign(response, res);
+      let error: string = '';
+      if (
+        Object.keys(response.value).some(item => {
+          error = item;
+          return Object.keys(res).includes(item);
+        })
+      ) {
+        throw new Error(`不能有相同的对象名-${error}`);
+      } else {
+        error = '';
 
-    console.log(response, funcStack, 'response');
+        response.value = Object.assign(response, res);
+        console.log(response.value, ' resp');
+      }
+    }
 
     const layout = func();
     const layouts = computed(() => {

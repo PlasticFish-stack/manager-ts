@@ -85,7 +85,6 @@ const layoutsFormat = () => {
     }
   }
 }
-console.log(layoutsFormat, 'wtf');
 
 let layouts = layoutFormat(layoutsFormat, true)
 
