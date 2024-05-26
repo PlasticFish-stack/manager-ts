@@ -42,13 +42,15 @@
           </q-item-section>
           <q-item-section>首页</q-item-section>
         </q-item>
-        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'robot'" @click="link = 'robot'">
+        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'robot'" @click="link = 'robot'"
+          to="robot">
           <q-item-section avatar>
             <q-icon name="smart_toy" />
           </q-item-section>
           <q-item-section class="text-">GPT Chat</q-item-section>
         </q-item>
-        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'group'" @click="link = 'group'">
+        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'group'" @click="link = 'group'"
+          to="group">
           <q-item-section avatar>
             <q-icon name="groups" />
           </q-item-section>

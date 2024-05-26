@@ -24,6 +24,7 @@ export const useScreen = () => {
   });
   const funcStack: ((() => object) | undefined)[] = [];
   const response = ref({});
+  const valStack = ref([]);
   function getScreenType(screens: QVueGlobals['screen']) {
     for (const item in screen) {
       const res = screens[item as keyof QVueGlobals['screen']];
@@ -36,6 +37,7 @@ export const useScreen = () => {
   function layoutFormat(func: () => object, bool?: boolean) {
     if (bool) {
       funcStack.push(func);
+      console.log(funcStack, ' un');
     } else {
       const res: object = func();
       // console.log(Object.keys(response), Object.keys(res), 'res');
@@ -50,12 +52,9 @@ export const useScreen = () => {
         throw new Error(`不能有相同的对象名-${error}`);
       } else {
         error = '';
-
         response.value = Object.assign(response, res);
-        console.log(response.value, ' resp');
       }
     }
-
     const layout = func();
     const layouts = computed(() => {
       const res: Res = {}; // 明确定义res的类型
@@ -70,6 +69,15 @@ export const useScreen = () => {
     });
     return layouts;
   }
+  function instancing() {
+    if (funcStack.length != 0) {
+      funcStack.forEach((item: (() => object) | undefined) => {
+        return valStack.value.push(item());
+      });
+    }
+    console.log(funcStack);
+    console.log(valStack.value, '?');
+  }
   getScreenType($q.screen);
   window.addEventListener(
     'resize',
@@ -77,5 +85,5 @@ export const useScreen = () => {
       getScreenType($q.screen);
     }),
   );
-  return { screen, layoutFormat };
+  return { screen, layoutFormat, instancing };
 };

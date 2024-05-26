@@ -6,7 +6,10 @@ const routes: RouteRecordRaw[] = [
     name: 'index',
     component: () => import('layouts/MainLayout.vue'),
     redirect: '/home',
-    children: [{ path: '/home', name: 'home', component: () => import('pages/index/IndexPage.vue') }],
+    children: [
+      { path: '/home', name: 'home', component: () => import('pages/index/IndexPage.vue') },
+      { path: '/group', name: 'group', component: () => import('pages/group/IndexPage.vue') },
+    ],
   },
   {
     path: '/login',
