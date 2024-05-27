@@ -16,7 +16,6 @@ export const UseTitleStore = defineStore('title', () => {
       getTitle();
     }
   }
-  getTitle();
 
   function titleManager(title: string) {
     if (title) {
@@ -26,5 +25,5 @@ export const UseTitleStore = defineStore('title', () => {
     }
     return LocalStorage.getItem('title');
   }
-  return { webTitle, titleManager };
+  return { webTitle, titleManager, getTitle };
 });

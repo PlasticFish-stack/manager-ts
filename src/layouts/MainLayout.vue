@@ -80,6 +80,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { loginUser } from 'src/api/permission';
+defineOptions({
+  preFetch() {
+    async function verify() {
+      try {
+        await loginUser()
+      } catch {
+        console.log('登录状态异常,请重新登录');
+      }
+    }
+    verify()
+  }
+})
 // import { UseTitleStore } from 'src/stores/title-store';
 interface SwiperTouch {
   evt?: Event,
@@ -108,7 +120,7 @@ function swipeDrawer({ ...info }: SwiperTouch) {
 function DrawerOpen() {
   swipeDrawerOpen.value = !swipeDrawerOpen.value
 }
-async function verify() {
+async function loginVerify() {
   try {
     const res = await loginUser()
     user.value = res.data.username
@@ -116,7 +128,7 @@ async function verify() {
     console.log('登录状态异常,请重新登录');
   }
 }
-verify()
+loginVerify()
 </script>
 <style lang="scss">
 .modeMoblie-enter-active {

@@ -166,8 +166,4 @@ body.screen--sm {
     min-width: 100vw;
   }
 }
-
-body.screen--md {
-  .login-box {}
-}
 </style>

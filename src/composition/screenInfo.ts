@@ -6,15 +6,7 @@ interface Screen {
   name: string;
   [key: string]: number | string;
 }
-interface Res {
-  [key: string]: {
-    [key: string]: object | string[];
-  };
-}
-// interface Layout {
-//   mobile: { [key: string]: object };
-//   desktop: { [key: string]: object };
-// }
+
 export const useScreen = () => {
   const $q = useQuasar();
   const screen = reactive<Screen>({
@@ -22,9 +14,7 @@ export const useScreen = () => {
     width: 0,
     name: '',
   });
-  const funcStack: ((() => object) | undefined)[] = [];
-  const response = ref({});
-  const valStack = ref([]);
+
   function getScreenType(screens: QVueGlobals['screen']) {
     for (const item in screen) {
       const res = screens[item as keyof QVueGlobals['screen']];
@@ -34,50 +24,7 @@ export const useScreen = () => {
       screen[item] = res;
     }
   }
-  function layoutFormat(func: () => object, bool?: boolean) {
-    if (bool) {
-      funcStack.push(func);
-      console.log(funcStack, ' un');
-    } else {
-      const res: object = func();
-      // console.log(Object.keys(response), Object.keys(res), 'res');
-      // response = Object.assign(response, res);
-      let error: string = '';
-      if (
-        Object.keys(response.value).some(item => {
-          error = item;
-          return Object.keys(res).includes(item);
-        })
-      ) {
-        throw new Error(`不能有相同的对象名-${error}`);
-      } else {
-        error = '';
-        response.value = Object.assign(response, res);
-      }
-    }
-    const layout = func();
-    const layouts = computed(() => {
-      const res: Res = {}; // 明确定义res的类型
-      for (const item in layout) {
-        if (screen.name === 'xs') {
-          res[item] = layout[item].mobile;
-        } else {
-          res[item] = layout[item].desktop;
-        }
-      }
-      return res;
-    });
-    return layouts;
-  }
-  function instancing() {
-    if (funcStack.length != 0) {
-      funcStack.forEach((item: (() => object) | undefined) => {
-        return valStack.value.push(item());
-      });
-    }
-    console.log(funcStack);
-    console.log(valStack.value, '?');
-  }
+
   getScreenType($q.screen);
   window.addEventListener(
     'resize',
@@ -85,5 +32,5 @@ export const useScreen = () => {
       getScreenType($q.screen);
     }),
   );
-  return { screen, layoutFormat, instancing };
+  return { screen };
 };

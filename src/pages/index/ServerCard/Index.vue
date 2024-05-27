@@ -1,19 +1,21 @@
 <template>
-  <div class="q-pa-lg" :class="layouts.container.class" :style="(layouts.container.css as StyleValue)">
-    <div :class="layouts.title.class" :style="(layouts.title.css as StyleValue)">
+  <div class="q-pa-lg" :class="[darkStore.dark ? 'container_dark' : 'container']">
+    <div :class="[screen.name != 'xs' ? 'column' : 'row  justify-between']">
       <span>Server Info</span>
-      <span style="font-size: 1.1rem; font-weight: 600;" class="text-grey-8">服务器信息</span>
+      <span style="font-size: 1.1rem; font-weight: 600;">服务器信息</span>
     </div>
     <div class="cpu q-mt-sm row items-center justify-between">
       <cpu v-if="props.msg.cpu" :msg="(props.msg.cpu)[0]" />
+      <q-skeleton v-if="!props.msg.cpu" type="QRange" width="100%" />
     </div>
-    <div class="disk title q-mt-sm row items-center justify-between">
+    <div class="disk title q-mt-md row items-center justify-between">
       <disk v-if="props.msg.disk" :msg="props.msg.disk" />
+      <q-skeleton v-if="!props.msg.disk" type="QRange" width="100%" />
     </div>
-    <div class="memory title row items-center justify-between">
+    <div class="q-mt-md memory title row items-center justify-between">
       <memory v-if="props.msg.memory" :msg="props.msg.memory" />
+      <q-skeleton v-if="!props.msg.memory" type="QRange" width="100%" />
     </div>
-    <button @click="console.log(darkStore.dark)"></button>
   </div>
 </template>
 
@@ -21,85 +23,25 @@
 import cpu from './components/cpu.vue'
 import disk from './components/disk.vue'
 import memory from './components/memory.vue'
-
+import { UseDarkStore } from 'src/stores/dark-store';
 import { useScreen } from 'src/composition/screenInfo';
-import { StyleValue } from 'vue';
-import { UseDarkStore } from 'stores/dark-store'
-
-// interface Layout {
-//   mobile: { [key: string]: object };
-//   desktop: { [key: string]: object };
-// }
-
 const props = defineProps(['msg'])
 const darkStore = UseDarkStore()
-
-const { layoutFormat } = useScreen()
-const layoutsFormat = () => {
-  return {
-    container: {
-      mobile: {
-        css: {
-          height: '100%',
-          width: '100%'
-        },
-        class: [
-          'column'
-        ]
-      },
-      desktop: {
-        css: {
-
-        },
-        class: [
-          'column', darkStore.dark ? 'container_dark' : 'container'
-        ]
-      }
-    },
-    title: {
-      mobile: {
-        css: {
-          fontSize: '1.6rem',
-          fontWeight: '600',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-
-        },
-        class: [
-          'text-grey-9'
-        ]
-      },
-      desktop: {
-        css: {
-          fontSize: '1.6rem',
-          fontWeight: '600',
-          display: 'flex',
-          flexDirection: 'column'
-        },
-        class: [
-          'text-grey-9'
-        ]
-      }
-    }
-  }
-}
-
-let layouts = layoutFormat(layoutsFormat, true)
-
+const { screen } = useScreen()
+console.log(screen.name);
 
 </script>
 
 <style scoped lang="scss">
 .container {
-  border-radius: 8px;
+  border-radius: 4px;
   // font-weight: ;
   background: linear-gradient(90deg, rgb(247, 247, 247), rgb(255, 255, 255));
-  box-shadow: 2px 2px 3px 2px rgb(212, 206, 206);
+  box-shadow: 1px 2px 3px 2px rgb(212, 206, 206);
 }
 
 .container_dark {
+  border-radius: 4px;
   box-shadow: none;
   background-color: rgb(83, 83, 83);
 }
