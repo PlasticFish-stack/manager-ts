@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">DISK</div>
-    <span style="font-size: 0.9rem; font-weight: 600;">磁盘</span>
+    <span class="content" style="font-size: 0.9rem; font-weight: 600;">磁盘</span>
   </div>
   <div style="position: relative; width: 60%; align-items: center; font-size: 0.7rem; font-weight: 500;"
     v-if="props.msg" class="row">

@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="lHh lpr lFf" v-touch-swipe.left.right="swipeDrawer">
-    <q-header class="q-pa-sm transparent">
-      <div class="fillet-dark q-py-xs">
+  <q-layout view="lHh lpr lFf" v-touch-swipe.left.right="swipeDrawer" @scroll="scrollHandler">
+    <q-header class="q-pa-sm" :class="headerBg ? 'transparent' : 'header'">
+      <div class=" q-py-xs" :class="headerBg ? 'fillet-dark' : ''">
         <q-toolbar>
           <q-avatar rounded>
             <img src="src/assets/anime/404.png">
@@ -104,7 +104,7 @@ interface SwiperTouch {
 // const titleStore = UseTitleStore()
 let link = ref('home')
 const user = ref<string>('')
-
+const headerBg = ref(true)
 const leftDrawerOpen = ref(true);
 const swipeDrawerOpen = ref(false)
 
@@ -120,6 +120,13 @@ function swipeDrawer({ ...info }: SwiperTouch) {
 function DrawerOpen() {
   swipeDrawerOpen.value = !swipeDrawerOpen.value
 }
+function scrollHandler(evt: { position: number; }) {
+  if (evt.position > 1) {
+    headerBg.value = false
+    return
+  }
+  headerBg.value = true
+}
 async function loginVerify() {
   try {
     const res = await loginUser()
@@ -131,6 +138,11 @@ async function loginVerify() {
 loginVerify()
 </script>
 <style lang="scss">
+.header {
+  background-color: rgb(37, 36, 36);
+  border-radius: 0px 0px 2px 2px;
+}
+
 .modeMoblie-enter-active {
   animation: flipInX 0.5s;
 }

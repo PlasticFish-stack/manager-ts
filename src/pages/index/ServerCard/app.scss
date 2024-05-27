@@ -1,11 +1,26 @@
 .title {
   font-size: 1.1rem;
   font-weight: 600;
+  color: var(--title-primary);
+}
+.content {
+  color: var(--title-second);
 }
 .ratio {
   height: 20px;
   display: flex;
   background-color: grey;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+.loadRatio {
+  padding-left: 7px;
+  padding-right: 7px;
+  height: 24px;
+  display: flex;
+  background-color: grey;
+  color: rgb(41, 230, 72);
   border-radius: 4px;
   justify-content: center;
   align-items: center;

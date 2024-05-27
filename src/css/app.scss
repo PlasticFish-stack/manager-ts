@@ -6,6 +6,16 @@
   src: url(./segoe-ui/SegoeUI-VF.ttf);
   font-display: block;
 }
+.body--light {
+  color: rgba(0, 0, 0, 0.87);
+  --title-primary: rgb(37, 37, 37); // color: rgb(39, 37, 37);
+  --title-second: rgb(85, 85, 85);
+}
+
+.body--dark {
+  color: rgba(255, 255, 255, 0);
+  --title-primary: rgb(255, 255, 255);
+}
 html,
 body {
   font-family: 'Segoe';
