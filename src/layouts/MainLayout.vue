@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh lpr lFf" v-touch-swipe.left.right="swipeDrawer" @scroll="scrollHandler">
-    <q-header class="q-pa-sm" :class="headerBg ? 'transparent' : 'header'">
-      <div class=" q-py-xs" :class="headerBg ? 'fillet-dark' : ''">
+    <q-header class="header" :class="headerBg ? 'transparent q-pa-sm' : ''">
+      <div class="headerInner q-py-xs" :class="headerBg ? 'fillet-dark' : ''">
         <q-toolbar>
           <q-avatar rounded>
             <img src="src/assets/anime/404.png">
@@ -20,8 +20,8 @@
           <q-space />
           <!-- <div class="mobile-only text-h5"> {{ titleStore.webTitle }}</div> -->
           <q-space />
-          <q-btn padding="sm" color="red-7" :icon="swipeDrawerOpen ? 'menu_open' : 'menu'" @click="DrawerOpen"
-            class="q-mini-drawer-hide mobile-only" />
+          <q-btn padding="sm" :icon="swipeDrawerOpen ? 'menu_open' : 'menu'" @click="DrawerOpen"
+            class="q-mini-drawer-hide mobile-only barBtn" />
         </q-toolbar>
       </div>
 
@@ -80,6 +80,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { loginUser } from 'src/api/permission';
+import gsap from 'gsap'
+import { dom } from 'quasar'
+
 defineOptions({
   preFetch() {
     async function verify() {
@@ -101,6 +104,7 @@ interface SwiperTouch {
   duration?: number,
   distance?: object
 }
+const { height } = dom
 // const titleStore = UseTitleStore()
 let link = ref('home')
 const user = ref<string>('')
@@ -120,12 +124,69 @@ function swipeDrawer({ ...info }: SwiperTouch) {
 function DrawerOpen() {
   swipeDrawerOpen.value = !swipeDrawerOpen.value
 }
+onMounted(() => {
+  let ele = document.querySelector('.headerInner')
+  if (ele) {
+    headerInner.value = height(ele)
+  }
+})
+const headerInner = ref(0)
+const complete = ref(true)
+const inner = gsap.timeline()
 function scrollHandler(evt: { position: number; }) {
-  if (evt.position > 1) {
+  if (evt.position > 1 && headerBg.value) {
     headerBg.value = false
+
+    if (complete.value) {
+      console.log(complete.value);
+
+      inner.to('.headerInner', {
+        immediateRender: true,
+        overwrite: true,
+        height: headerInner.value + 12,
+        duration: 0.4,
+        ease: 'none',
+        onStart: () => {
+          complete.value = false
+        },
+        onComplete: () => {
+          complete.value = true
+        }
+      }).to('.barBtn', {
+        immediateRender: true,
+        duration: 0,
+
+        background: 'rgb(241, 187, 87)'
+      }, 0.2).to('.barBtn', {
+        immediateRender: true,
+        duration: 0,
+
+        background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
+      }, 0.4)
+    }
+
     return
   }
-  headerBg.value = true
+  if (evt.position <= 1) {
+    headerBg.value = true
+    if (complete.value) {
+      inner.to('.headerInner', {
+        height: headerInner.value,
+        duration: 0,
+        ease: 'none',
+        onStart: () => {
+          complete.value = true
+        },
+      }).to('.barBtn', {
+        immediateRender: true,
+        duration: 0,
+        background: 'rgb(235, 111, 111)'
+      }, 0.2).to('.barBtn', {
+        immediateRender: true,
+        background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
+      }, 0.4)
+    }
+  }
 }
 async function loginVerify() {
   try {
@@ -136,11 +197,27 @@ async function loginVerify() {
   }
 }
 loginVerify()
+onMounted(() => {
+  // gsap.to('.barBtn', {
+  //   background: 'black'
+  // })
+})
 </script>
 <style lang="scss">
+.barBtn {
+  background: linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))
+}
+
 .header {
-  background-color: rgb(37, 36, 36);
-  border-radius: 0px 0px 2px 2px;
+  background: var(--gradient-bar);
+  border-radius: 0px 0px 4px 4px;
+  overflow: hidden;
+}
+
+.headerInner {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .modeMoblie-enter-active {

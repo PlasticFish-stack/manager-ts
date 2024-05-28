@@ -20,7 +20,7 @@
       <swap v-if="props.msg.swap" :msg="props.msg.swap" />
       <q-skeleton v-if="!props.msg.swap" type="QRange" width="100%" />
     </div>
-    <div class="q-mt-md load title row items-center justify-between">
+    <div class="q-mt-md q-mb-sm load title row items-center justify-between">
       <load v-if="props.msg.load" :msg="props.msg.load" />
       <q-skeleton v-if="!props.msg.load" type="QRange" width="100%" />
     </div>
