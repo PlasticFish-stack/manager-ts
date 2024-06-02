@@ -7,7 +7,7 @@
     v-if="props.msg" class="row">
     <div
       style="position: absolute; width: 100%; margin-top: -45px; display: flex; align-items: center; justify-content: space-between;">
-      已用{{ byte(props.msg['used']) }}MB/{{ byte(props.msg['total']) }}MB
+      {{ byte(props.msg['used']) }}MB/{{ byte(props.msg['total']) }}MB
       <div class="ratio" :class="level(+(props.msg['used'] / props.msg['total'] * 100).toFixed(2))"
         style="width: 50px; margin-left: 2px;">
         {{ (props.msg['used'] / props.msg['total'] * 100).toFixed(2) }}%

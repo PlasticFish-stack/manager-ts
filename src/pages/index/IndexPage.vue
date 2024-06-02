@@ -1,13 +1,19 @@
 <template>
   <q-page class="row q-pt-xs q-pb-md q-px-sm q-pl-xs" style="overflow: hidden;">
     <div class="column" style="width: 850px; border-radius: 8px; ">
-      <div class="column no-wrap">
-        <div class="row q-gutter-x-md">
-          <ServerCard :msg="serverMsg" style="flex: 1; " />
+      <div class="column no-wrap" style="flex: 1;">
+        <div class="row">
+          <ServerCard :msg="serverMsg" style="flex: 1;" />
+        </div>
+        <div class="row bg-red q-mt-md" style="flex: 1;">
+
+        </div>
+        <div class="row bg-blue q-mt-md desktop-only" style="flex: 1;">
+
         </div>
       </div>
     </div>
-    <div class="bg-blue column q-ml-md" style="height: 900px;flex: 1;border-radius: 4px; overflow: hidden;">
+    <div class="bg-green column q-ml-md desktop-only" style="flex: 1;border-radius: 4px; overflow: hidden;">
 
     </div>
   </q-page>
