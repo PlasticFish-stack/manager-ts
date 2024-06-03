@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh lpr lFf" v-touch-swipe.left.right="swipeDrawer" @scroll="scrollHandler">
+  <q-layout view="lHh lpr lFf" v-touch-swipe.left.right="swipeDrawer" @scroll="scrollHandler" class="scrollWindow">
     <q-header class="header" :class="headerBg ? 'transparent q-pa-sm' : ''">
       <div class="headerInner q-py-xs" :class="headerBg ? 'fillet-dark' : ''">
         <q-toolbar>
@@ -84,6 +84,7 @@ import { ref } from 'vue';
 import { loginUser } from 'src/api/permission';
 import gsap from 'gsap'
 import { dom } from 'quasar'
+
 
 defineOptions({
   preFetch() {
@@ -196,7 +197,6 @@ function scrollHandler(evt: { position: number; }) {
         duration: 0,
         background: 'rgb(235, 111, 111)'
       }, 0.2).to('.barBtn', {
-        immediateRender: true,
         background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
       }, 0.4)
     }
@@ -207,36 +207,35 @@ function linkJump(str: string) {
     return
   }
   link.value = str
-  console.log(window.scrollY, 'scroll');
-
-  if (window.scrollY > 1 && headerBg.value) {
-    headerBg.value = false
-    if (complete.value) {
-      console.log(complete.value);
-      inner.to('.headerInner', {
-        immediateRender: true,
-        overwrite: true,
-        height: headerInner.value + 12,
-        duration: 0.4,
-        ease: 'none',
-        onStart: () => {
-          complete.value = false
-        },
-        onComplete: () => {
-          complete.value = true
-        }
-      }).to('.barBtn', {
-        immediateRender: true,
-        duration: 0,
-        background: 'rgb(241, 187, 87)'
-      }, 0.2).to('.barBtn', {
-        immediateRender: true,
-        duration: 0,
-        background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
-      }, 0.4)
-    }
-    return
-  }
+  swipeDrawerOpen.value = false
+  // if (window.scrollY > 1 && headerBg.value) {
+  //   headerBg.value = false
+  //   if (complete.value) {
+  //     console.log(complete.value);
+  //     inner.to('.headerInner', {
+  //       immediateRender: true,
+  //       overwrite: true,
+  //       height: headerInner.value + 12,
+  //       duration: 0.4,
+  //       ease: 'none',
+  //       onStart: () => {
+  //         complete.value = false
+  //       },
+  //       onComplete: () => {
+  //         complete.value = true
+  //       }
+  //     }).to('.barBtn', {
+  //       immediateRender: true,
+  //       duration: 0,
+  //       background: 'rgb(241, 187, 87)'
+  //     }, 0.2).to('.barBtn', {
+  //       immediateRender: true,
+  //       duration: 0,
+  //       background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
+  //     }, 0.4)
+  //   }
+  //   return
+  // }
   if (window.scrollY <= 1) {
     headerBg.value = true
     if (complete.value) {
@@ -252,7 +251,6 @@ function linkJump(str: string) {
         duration: 0,
         background: 'rgb(235, 111, 111)'
       }, 0.2).to('.barBtn', {
-        immediateRender: true,
         background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
       }, 0.4)
     }
