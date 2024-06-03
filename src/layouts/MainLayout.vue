@@ -18,7 +18,9 @@
             </q-menu>
           </q-avatar>
           <q-space />
-          <!-- <div class="mobile-only text-h5"> {{ titleStore.webTitle }}</div> -->
+          <div class="mobile-only titleLink">
+            <q-icon :name="titleLink" />
+          </div>
           <q-space />
           <q-btn padding="sm" :icon="swipeDrawerOpen ? 'menu_open' : 'menu'" @click="DrawerOpen"
             class="q-mini-drawer-hide mobile-only barBtn" />
@@ -35,21 +37,21 @@
             <q-icon :name="!leftDrawerOpen ? 'menu_open' : 'menu'" />
           </q-item-section>
         </q-item>
-        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'home'" @click="link = 'home'"
+        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'home'" @click="linkJump('home')"
           to="home">
           <q-item-section avatar>
-            <q-icon name="cruelty_free" />
+            <q-icon name="home" />
           </q-item-section>
           <q-item-section>首页</q-item-section>
         </q-item>
-        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'robot'" @click="link = 'robot'"
+        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'robot'" @click="linkJump('robot')"
           to="robot">
           <q-item-section avatar>
             <q-icon name="smart_toy" />
           </q-item-section>
           <q-item-section class="text-">GPT Chat</q-item-section>
         </q-item>
-        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'group'" @click="link = 'group'"
+        <q-item clickable v-ripple active-class="my-menu-link" :active="link === 'group'" @click="linkJump('group')"
           to="group">
           <q-item-section avatar>
             <q-icon name="groups" />
@@ -107,6 +109,21 @@ interface SwiperTouch {
 const { height } = dom
 // const titleStore = UseTitleStore()
 let link = ref('home')
+const titleLink = computed(() => {
+  let res = ''
+  switch (true) {
+    case link.value == 'home':
+      res = 'home';
+      break;
+    case link.value == 'robot':
+      res = 'smart_toy';
+      break;
+    case link.value == 'group':
+      res = 'groups';
+      break;
+  }
+  return res
+})
 const user = ref<string>('')
 const headerBg = ref(true)
 const leftDrawerOpen = ref(true);
@@ -134,12 +151,11 @@ const headerInner = ref(0)
 const complete = ref(true)
 const inner = gsap.timeline()
 function scrollHandler(evt: { position: number; }) {
+
   if (evt.position > 1 && headerBg.value) {
     headerBg.value = false
-
     if (complete.value) {
       console.log(complete.value);
-
       inner.to('.headerInner', {
         immediateRender: true,
         overwrite: true,
@@ -155,12 +171,10 @@ function scrollHandler(evt: { position: number; }) {
       }).to('.barBtn', {
         immediateRender: true,
         duration: 0,
-
         background: 'rgb(241, 187, 87)'
       }, 0.2).to('.barBtn', {
         immediateRender: true,
         duration: 0,
-
         background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
       }, 0.4)
     }
@@ -168,6 +182,62 @@ function scrollHandler(evt: { position: number; }) {
     return
   }
   if (evt.position <= 1) {
+    headerBg.value = true
+    if (complete.value) {
+      inner.to('.headerInner', {
+        height: headerInner.value,
+        duration: 0,
+        ease: 'none',
+        onStart: () => {
+          complete.value = true
+        },
+      }).to('.barBtn', {
+        immediateRender: true,
+        duration: 0,
+        background: 'rgb(235, 111, 111)'
+      }, 0.2).to('.barBtn', {
+        immediateRender: true,
+        background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
+      }, 0.4)
+    }
+  }
+}
+function linkJump(str: string) {
+  if (link.value == str) {
+    return
+  }
+  link.value = str
+  console.log(window.scrollY, 'scroll');
+
+  if (window.scrollY > 1 && headerBg.value) {
+    headerBg.value = false
+    if (complete.value) {
+      console.log(complete.value);
+      inner.to('.headerInner', {
+        immediateRender: true,
+        overwrite: true,
+        height: headerInner.value + 12,
+        duration: 0.4,
+        ease: 'none',
+        onStart: () => {
+          complete.value = false
+        },
+        onComplete: () => {
+          complete.value = true
+        }
+      }).to('.barBtn', {
+        immediateRender: true,
+        duration: 0,
+        background: 'rgb(241, 187, 87)'
+      }, 0.2).to('.barBtn', {
+        immediateRender: true,
+        duration: 0,
+        background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
+      }, 0.4)
+    }
+    return
+  }
+  if (window.scrollY <= 1) {
     headerBg.value = true
     if (complete.value) {
       inner.to('.headerInner', {
@@ -208,9 +278,16 @@ onMounted(() => {
   background: linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))
 }
 
+.titleLink {
+  color: var(--title-link);
+  font-size: 1.8rem;
+  display: flex;
+
+}
+
 .header {
   background: var(--gradient-bar);
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px 5px 5px;
   overflow: hidden;
 }
 

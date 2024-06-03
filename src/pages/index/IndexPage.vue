@@ -5,10 +5,10 @@
         <div class="row">
           <ServerCard :msg="serverMsg" style="flex: 1;" />
         </div>
-        <div class="row bg-red q-mt-md" style="flex: 1;">
+        <div class="row bg-red q-mt-md" style="height: 1400px; ">
 
         </div>
-        <div class="row bg-blue q-mt-md desktop-only" style="flex: 1;">
+        <div class="row bg-blue q-mt-md desktop-only" v-if="screen.height > 1080" style="flex: 1;">
 
         </div>
       </div>
@@ -22,8 +22,10 @@
 <script setup lang="ts">
 import ServerCard from './ServerCard'
 import { useInfo } from 'src/composition/serverInfo';
-// import { useScreen } from 'src/composition/screenInfo';
-// const { screen } = useScreen()
+import { useScreen } from 'src/composition/screenInfo';
+const { screen } = useScreen()
+console.log(screen.height);
+
 // serverMsg,
 const { InfoGet, serverMsg } = useInfo()
 InfoGet()
