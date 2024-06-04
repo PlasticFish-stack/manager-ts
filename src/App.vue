@@ -7,7 +7,10 @@
 // import { useScreen } from 'src/composition/screenInfo';
 // const { instancing } = useScreen()
 import { UseTitleStore } from 'stores/title-store'
+import request from 'src/api/index'
 const titleStore = UseTitleStore()
+console.log(request);
+
 onMounted(() => {
   titleStore.getTitle()
 })

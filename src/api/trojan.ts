@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from 'boot/axios';
 
 export function start() {
@@ -20,14 +21,14 @@ export function getLoglevel() {
   return api.get('/trojan/loglevel');
 }
 
-export function setLoglevel(data) {
+export function setLoglevel(data: any) {
   return api.post('/trojan/loglevel', data);
 }
 
-export function setDomain(data) {
+export function setDomain(data: any) {
   return api.post('/trojan/domain', data);
 }
 
-export function trojanSwitch(data) {
+export function trojanSwitch(data: any) {
   return api.post('/trojan/switch', data);
 }

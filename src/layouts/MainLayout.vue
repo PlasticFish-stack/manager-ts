@@ -86,19 +86,6 @@ import { useQuasarUtils } from 'src/composition/quasarUtils'
 import gsap from 'gsap'
 import { dom } from 'quasar'
 
-
-defineOptions({
-  preFetch() {
-    async function verify() {
-      try {
-        await loginUser()
-      } catch {
-        console.log('登录状态异常,请重新登录');
-      }
-    }
-    verify()
-  }
-})
 interface SwiperTouch {
   evt?: Event,
   touch?: boolean,
@@ -144,18 +131,12 @@ function swipeDrawer({ ...info }: SwiperTouch) {
 function DrawerOpen() {
   swipeDrawerOpen.value = !swipeDrawerOpen.value
 }
-onMounted(() => {
-  let ele = document.querySelector('.headerInner')
-  if (ele) {
-    headerInner.value = height(ele)
-  }
-})
+
 const headerInner = ref(0)
 const complete = ref(true)
 const inner = gsap.timeline()
 const btnChangeBool = ref(false)
 function scrollHandler(evt: { position: number; }) {
-
   if (evt.position > 1 && headerBg.value) {
     headerBg.value = false
     if (complete.value) {
@@ -185,7 +166,6 @@ function scrollHandler(evt: { position: number; }) {
         }
       }, 0.4)
     }
-
     return
   }
   if (evt.position <= 1) {
@@ -254,9 +234,10 @@ async function loginVerify() {
 }
 loginVerify()
 onMounted(() => {
-  // gsap.to('.barBtn', {
-  //   background: 'black'
-  // })
+  let ele = document.querySelector('.headerInner')
+  if (ele) {
+    headerInner.value = height(ele)
+  }
 })
 </script>
 <style lang="scss">
