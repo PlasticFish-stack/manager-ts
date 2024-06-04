@@ -9,6 +9,8 @@ interface Screen {
 
 export const useScreen = () => {
   const $q = useQuasar();
+  console.log($q);
+
   const screen = reactive<Screen>({
     height: 0,
     width: 0,

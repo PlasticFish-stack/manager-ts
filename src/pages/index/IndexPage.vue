@@ -5,7 +5,7 @@
         <div class="row">
           <ServerCard :msg="serverMsg" style="flex: 1;" />
         </div>
-        <div class="row bg-red q-mt-md" style="height: 1400px; ">
+        <div class="row bg-red q-mt-md" style="flex: 1 ">
 
         </div>
         <div class="row bg-blue q-mt-md desktop-only" v-if="screen.height > 1080" style="flex: 1;">

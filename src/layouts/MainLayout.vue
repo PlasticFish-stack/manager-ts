@@ -82,6 +82,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { loginUser } from 'src/api/permission';
+import { useQuasarUtils } from 'src/composition/quasarUtils'
 import gsap from 'gsap'
 import { dom } from 'quasar'
 
@@ -98,7 +99,6 @@ defineOptions({
     verify()
   }
 })
-// import { UseTitleStore } from 'src/stores/title-store';
 interface SwiperTouch {
   evt?: Event,
   touch?: boolean,
@@ -108,8 +108,10 @@ interface SwiperTouch {
   distance?: object
 }
 const { height } = dom
+const { platform } = useQuasarUtils()
+
 // const titleStore = UseTitleStore()
-let link = ref('home')
+const link = ref('home')
 const titleLink = computed(() => {
   let res = ''
   switch (true) {
@@ -151,6 +153,7 @@ onMounted(() => {
 const headerInner = ref(0)
 const complete = ref(true)
 const inner = gsap.timeline()
+const btnChangeBool = ref(false)
 function scrollHandler(evt: { position: number; }) {
 
   if (evt.position > 1 && headerBg.value) {
@@ -176,7 +179,10 @@ function scrollHandler(evt: { position: number; }) {
       }, 0.2).to('.barBtn', {
         immediateRender: true,
         duration: 0,
-        background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
+        background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))',
+        onComplete: () => {
+          btnChangeBool.value = true
+        }
       }, 0.4)
     }
 
@@ -197,7 +203,10 @@ function scrollHandler(evt: { position: number; }) {
         duration: 0,
         background: 'rgb(235, 111, 111)'
       }, 0.2).to('.barBtn', {
-        background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
+        background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))',
+        onComplete: () => {
+          btnChangeBool.value = false
+        }
       }, 0.4)
     }
   }
@@ -207,35 +216,10 @@ function linkJump(str: string) {
     return
   }
   link.value = str
-  swipeDrawerOpen.value = false
-  // if (window.scrollY > 1 && headerBg.value) {
-  //   headerBg.value = false
-  //   if (complete.value) {
-  //     console.log(complete.value);
-  //     inner.to('.headerInner', {
-  //       immediateRender: true,
-  //       overwrite: true,
-  //       height: headerInner.value + 12,
-  //       duration: 0.4,
-  //       ease: 'none',
-  //       onStart: () => {
-  //         complete.value = false
-  //       },
-  //       onComplete: () => {
-  //         complete.value = true
-  //       }
-  //     }).to('.barBtn', {
-  //       immediateRender: true,
-  //       duration: 0,
-  //       background: 'rgb(241, 187, 87)'
-  //     }, 0.2).to('.barBtn', {
-  //       immediateRender: true,
-  //       duration: 0,
-  //       background: 'linear-gradient(90deg, rgb(241, 187, 87), rgb(255, 156, 27))'
-  //     }, 0.4)
-  //   }
-  //   return
-  // }
+  if (!platform('desktop')) {
+    swipeDrawerOpen.value = false
+  }
+  leftDrawerOpen.value = true
   if (window.scrollY <= 1) {
     headerBg.value = true
     if (complete.value) {
@@ -246,13 +230,17 @@ function linkJump(str: string) {
         onStart: () => {
           complete.value = true
         },
-      }).to('.barBtn', {
-        immediateRender: true,
-        duration: 0,
-        background: 'rgb(235, 111, 111)'
-      }, 0.2).to('.barBtn', {
-        background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
-      }, 0.4)
+      })
+      if (btnChangeBool.value) {
+        inner.to('.barBtn', {
+          immediateRender: true,
+          duration: 0,
+          background: 'rgb(235, 111, 111)'
+        }, 0.2).to('.barBtn', {
+          background: 'linear-gradient(180deg, rgb(235, 111, 111), rgb(201, 53, 53))'
+        }, 0.4)
+      }
+
     }
   }
 }
