@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-lg" :class="[darkStore.dark ? 'container_dark' : 'container']">
+  <div class="q-pa-lg container">
     <div :class="[screen.name != 'xs' ? 'column' : 'row  justify-between']">
       <span>Server Info</span>
       <span class="title" style="font-size: 1.1rem; font-weight: 600;">服务器信息</span>
@@ -34,26 +34,13 @@ import memory from './components/memory.vue'
 import swap from './components/swap.vue'
 import load from './components/load.vue'
 
-import { UseDarkStore } from 'src/stores/dark-store';
 import { useScreen } from 'src/composition/screenInfo';
 const props = defineProps(['msg'])
-const darkStore = UseDarkStore()
 const { screen } = useScreen()
 console.log(screen.name);
 
 </script>
 
 <style scoped lang="scss">
-.container {
-  border-radius: 6px;
-  // font-weight: ;
-  background: linear-gradient(90deg, rgb(247, 247, 247), rgb(255, 255, 255));
-  box-shadow: 1px 2px 3px 2px rgb(212, 206, 206);
-}
-
-.container_dark {
-  border-radius: 6px;
-  box-shadow: none;
-  background: linear-gradient(100deg, rgb(29, 29, 29), rgb(20, 20, 20))
-}
+@import '../app.scss'
 </style>

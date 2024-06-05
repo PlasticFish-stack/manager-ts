@@ -5,8 +5,8 @@
         <div class="row">
           <ServerCard :msg="serverMsg" style="flex: 1;" />
         </div>
-        <div class="row bg-red q-mt-md" style="flex: 1 ">
-
+        <div class="row  q-mt-md" style="flex: 1 ">
+          <DomainCard style="flex: 1;"></DomainCard>
         </div>
         <div class="row bg-blue q-mt-md desktop-only" v-if="screen.height > 1080" style="flex: 1;">
 
@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import ServerCard from './ServerCard'
+import DomainCard from './DomainCard'
 import { useInfo } from 'src/composition/serverInfo';
 import { useScreen } from 'src/composition/screenInfo';
 const { screen } = useScreen()

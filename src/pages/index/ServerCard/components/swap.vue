@@ -7,7 +7,7 @@
     v-if="props.msg" class="row">
     <div style="flex: 1; height: 100%; display: flex; justify-content: right;">
       <div v-if="byte(props.msg['total']) == 0" style="color: rgb(243, 62, 62); font-size: 0.9rem; font-weight: 600;">
-        服务器未启用SWAP</div>
+        未启用SWAP</div>
       <div v-if="byte(props.msg['total']) != 0"
         style="overflow: hidden; justify-content: space-around; width: 100%;border-radius: 4px;"
         class="q-py-sm row swap">

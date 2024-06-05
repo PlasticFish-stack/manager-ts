@@ -1,9 +1,8 @@
-const modules = import.meta.glob('./*.ts', { eager: true });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const modules: Record<string, { [key: string]: any }> = import.meta.glob('./*.ts', { eager: true });
 const directory: object = {};
-console.log(modules, 'modules');
 for (const path in modules) {
-  console.log(modules[path]);
-  for (const item in modules[path] as object) {
+  for (const item in modules[path]) {
     const res = modules[path][item];
     Object.assign(directory, { [item]: res });
   }
